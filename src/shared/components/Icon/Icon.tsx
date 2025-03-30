@@ -21,8 +21,9 @@ const Icon: React.FC<IconProps> = ({
       component="svg"
       width={size}
       height={size}
-      fill={color}
       sx={{
+        fill: color,
+        color: color, // This helps with SVGs using currentColor
         ...sx,
       }}
       aria-hidden="true"
