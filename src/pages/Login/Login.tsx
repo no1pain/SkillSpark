@@ -14,8 +14,8 @@ import { Icon } from "../../shared/components/Icon";
 import { useAuth } from "../../app/context/AuthContext";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("testpassword");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,7 +55,7 @@ const Login = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "#000000",
+        bgcolor: "transparent",
       }}
     >
       <Container maxWidth="xs" sx={{ p: 0 }}>

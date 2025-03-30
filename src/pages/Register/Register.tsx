@@ -67,7 +67,7 @@ const Register = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "#000000",
+        bgcolor: "transparent",
       }}
     >
       <Container maxWidth="xs" sx={{ p: 0 }}>

@@ -11,9 +11,9 @@ import { AuthProvider } from './context/AuthContext';
 function App() {
   return (
     <div style={{ 
-      backgroundColor: "#121212", 
-      backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)",
-      backgroundSize: "50px 50px",
+      backgroundColor: "#101318", 
+      backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px)",
+      backgroundSize: "40px 40px",
       minHeight: "100vh",
       width: "100%",
       position: "absolute",
