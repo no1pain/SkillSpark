@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, BoxProps } from "@mui/material";
-import { ICON } from "../../styles/colors";
+import { ICON } from "../../constants/colors";
 import { IconName } from "../../types";
 
 interface IconProps extends Omit<BoxProps, "color"> {

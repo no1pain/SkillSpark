@@ -7,19 +7,11 @@ import ProtectedRoute from './navigation/ProtectedRoute';
 import '../shared/styles/global.css';
 import SvgSprite from '../shared/components/SvgSprite';
 import { AuthProvider } from './context/AuthContext';
+import BackgroundProvider from './providers/BackgroundProvider';
 
 function App() {
   return (
-    <div style={{ 
-      backgroundColor: "#101318", 
-      backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px)",
-      backgroundSize: "40px 40px",
-      minHeight: "100vh",
-      width: "100%",
-      position: "absolute",
-      top: 0,
-      left: 0
-    }}>
+    <BackgroundProvider>
       <SvgSprite />
       <AuthProvider>
         <Router>
@@ -39,7 +31,7 @@ function App() {
           </Routes>
         </Router>
       </AuthProvider>
-    </div>
+    </BackgroundProvider>
   );
 }
 
