@@ -8,7 +8,7 @@ import {
   Paper, 
   IconButton
 } from '@mui/material';
-import { Visibility } from '@mui/icons-material';
+import { Icon } from '../../shared/components/Icon';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -63,15 +63,7 @@ const Register = () => {
               mb: 1.5
             }}
           >
-            {/* Ethereum-style logo */}
-            <svg width="20" height="24" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.99671 0L9.78516 0.711V21.8121L9.99671 22.0178L19.9934 16.0467L9.99671 0Z" fill="#C0C0C0"/>
-              <path d="M9.99687 0L0 16.0467L9.99687 22.0178V11.7878V0Z" fill="#FFFFFF"/>
-              <path d="M9.99671 23.8787L9.87891 24.021V31.5445L9.99671 31.8829L20 17.9106L9.99671 23.8787Z" fill="#C0C0C0"/>
-              <path d="M9.99687 31.8829V23.8787L0 17.9106L9.99687 31.8829Z" fill="#FFFFFF"/>
-              <path d="M9.99707 22.0178L19.9937 16.0467L9.99707 11.7878V22.0178Z" fill="#8D8D8D"/>
-              <path d="M0 16.0467L9.99687 22.0178V11.7878L0 16.0467Z" fill="#C0C0C0"/>
-            </svg>
+            <Icon name="ethereum" size={24} color="#FFFFFF" />
           </Box>
           
           <Typography component="h1" variant="h5" color="white" sx={{ mb: 2, fontWeight: 500, fontSize: '22px' }}>
@@ -183,7 +175,11 @@ const Register = () => {
                     padding: '4px' 
                   }}
                 >
-                  <Visibility fontSize="small" />
+                  <Icon 
+                    name={showPassword ? 'visibility-off' : 'visibility'} 
+                    size={20}
+                    color="#FFFFFF" 
+                  />
                 </IconButton>
               </Box>
             </Box>
@@ -224,12 +220,7 @@ const Register = () => {
               }}
             >
               <Box component="span" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '8px' }}>
-                  <path d="M16.1277 8.47226C16.1277 7.94453 16.0777 7.4168 15.9779 6.93997H8.45454V10.0943H12.8143C12.6168 11.1332 12.0404 12.0334 11.1812 12.631V14.7103H13.8096C15.3409 13.2859 16.1277 11.0695 16.1277 8.47226Z" fill="white"/>
-                  <path d="M8.4546 16.9009C10.6732 16.9009 12.5425 16.1398 13.8096 14.7103L11.1813 12.631C10.4448 13.1078 9.51585 13.3762 8.4546 13.3762C6.32619 13.3762 4.53094 11.9376 3.88585 10.0085H1.17676V12.1585C2.4323 14.9834 5.2573 16.9009 8.4546 16.9009Z" fill="white"/>
-                  <path d="M3.88566 10.0086C3.53387 8.97862 3.53387 7.83837 3.88566 6.80842V4.65844H1.17657C0.00425428 7.03859 0.00425428 9.7784 1.17657 12.1586L3.88566 10.0086Z" fill="white"/>
-                  <path d="M8.4546 3.51724C9.63657 3.49864 10.7789 3.9427 11.6381 4.7493L14.0039 2.38345C12.5223 0.990862 10.5271 0.231628 8.4546 0.25452C5.2573 0.25452 2.4323 2.17196 1.17676 4.99686L3.88585 7.14684C4.53094 5.21777 6.32619 3.77915 8.4546 3.51724Z" fill="white"/>
-                </svg>
+                <Icon name="apple" size={18} color="#FFFFFF" sx={{ mr: 1 }} />
                 Sign up with Apple
               </Box>
             </Button>

@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, BoxProps } from "@mui/material";
 import { ICON } from "../../styles/colors";
-
-export type IconName = "logo" | "visibility" | "visibility-off" | "apple";
+import { IconName } from "../../types";
 
 interface IconProps extends Omit<BoxProps, "color"> {
   name: IconName;
@@ -22,9 +21,8 @@ const Icon: React.FC<IconProps> = ({
       component="svg"
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      fill={color}
       sx={{
-        fill: color,
         ...sx,
       }}
       aria-hidden="true"
@@ -35,4 +33,4 @@ const Icon: React.FC<IconProps> = ({
   );
 };
 
-export default Icon;
+export { Icon };

@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 
-import '../shared/icons/sprite.svg';
 import '../shared/styles/global.css';
+import SvgSprite from '../shared/components/SvgSprite';
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
       top: 0,
       left: 0
     }}>
+      <SvgSprite />
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
