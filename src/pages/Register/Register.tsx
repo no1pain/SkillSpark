@@ -60,16 +60,7 @@ const Register = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        bgcolor: "#000000",
-      }}
-    >
+    <>
       <Container maxWidth="xs" sx={{ p: 0 }}>
         <Paper
           elevation={3}
@@ -315,21 +306,6 @@ const Register = () => {
         </Paper>
       </Container>
 
-      {/* Global message at bottom */}
-      <Box 
-        sx={{ 
-          position: 'fixed',
-          bottom: 20,
-          left: 0,
-          width: '100%',
-          textAlign: 'center',
-          color: 'rgba(255, 255, 255, 0.3)',
-          fontSize: '14px'
-        }}
-      >
-        Join over 5M global social media users
-      </Box>
-
       <Snackbar
         open={!!error}
         autoHideDuration={6000}
@@ -343,7 +319,7 @@ const Register = () => {
           {error}
         </Alert>
       </Snackbar>
-    </Box>
+    </>
   );
 };
 

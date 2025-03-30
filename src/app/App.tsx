@@ -8,6 +8,7 @@ import '../shared/styles/global.css';
 import SvgSprite from '../shared/components/SvgSprite';
 import { AuthProvider } from './context/AuthContext';
 import BackgroundProvider from './providers/BackgroundProvider';
+import MainLayout from './layout/MainLayout';
 
 function App() {
   return (
@@ -16,13 +17,15 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
+            <Route path="/register" element={<MainLayout><Register /></MainLayout>} />
             <Route 
               path="/dashboard" 
               element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <MainLayout>
+                    <Dashboard />
+                  </MainLayout>
                 </ProtectedRoute>
               } 
             />
