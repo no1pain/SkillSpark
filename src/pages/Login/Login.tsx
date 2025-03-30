@@ -67,8 +67,9 @@ const Login = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            borderRadius: 5,
-            bgcolor: "#1a1a1a",
+            borderRadius: 16,
+            bgcolor: "rgba(40, 40, 40, 0.8)",
+            backdropFilter: "blur(10px)",
             maxWidth: "360px",
             mx: "auto",
           }}
@@ -101,8 +102,8 @@ const Login = () => {
             <Box
               sx={{
                 mb: 1.5,
-                bgcolor: "#2A2A2A",
-                borderRadius: 2,
+                bgcolor: "rgba(60, 60, 60, 0.5)",
+                borderRadius: 8,
                 height: "48px",
                 overflow: "hidden",
               }}
@@ -135,8 +136,8 @@ const Login = () => {
             <Box
               sx={{
                 mb: 1.5,
-                bgcolor: "#2A2A2A",
-                borderRadius: 2,
+                bgcolor: "rgba(60, 60, 60, 0.5)",
+                borderRadius: 8,
                 height: "48px",
                 position: "relative",
                 overflow: "hidden",
@@ -196,7 +197,7 @@ const Login = () => {
                 my: 1.5,
                 bgcolor: "#333333",
                 color: "white",
-                borderRadius: 2,
+                borderRadius: 8,
                 "&:hover": { bgcolor: "#444444" },
                 textTransform: "none",
                 boxShadow: "none",
@@ -212,12 +213,12 @@ const Login = () => {
               variant="outlined"
               sx={{
                 height: "48px",
-                borderColor: "#333333",
+                borderColor: "rgba(255, 255, 255, 0.1)",
                 color: "white",
-                borderRadius: 2,
+                borderRadius: 8,
                 textTransform: "none",
                 "&:hover": {
-                  borderColor: "#444444",
+                  borderColor: "rgba(255, 255, 255, 0.2)",
                   bgcolor: "rgba(63, 63, 70, 0.1)",
                 },
                 boxShadow: "none",
@@ -267,6 +268,21 @@ const Login = () => {
           />
         </Paper>
       </Container>
+
+      {/* Global message at bottom */}
+      <Box 
+        sx={{ 
+          position: 'fixed',
+          bottom: 20,
+          left: 0,
+          width: '100%',
+          textAlign: 'center',
+          color: 'rgba(255, 255, 255, 0.3)',
+          fontSize: '14px'
+        }}
+      >
+        Join over 5M global social media users
+      </Box>
 
       <Snackbar
         open={!!error}
