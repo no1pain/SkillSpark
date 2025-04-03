@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Box } from '@mui/material';
 import { LearningStatsCard } from '../LearningStatsCard';
 
 interface LearningStatsGridProps {
@@ -17,8 +17,8 @@ export const LearningStatsGrid = ({
   badgeContent = '+2'
 }: LearningStatsGridProps) => {
   return (
-    <Grid container spacing={3}>
-      <Grid item sx={{ width: { xs: '100%', sm: '33.33%' } }}>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+      <Box sx={{ flexBasis: { xs: '100%', sm: 'calc(33.33% - 16px)' } }}>
         <LearningStatsCard 
           value={coursesInProgress}
           label="Courses in Progress"
@@ -27,18 +27,18 @@ export const LearningStatsGrid = ({
           showBadge={true}
           badgeContent={badgeContent}
         />
-      </Grid>
+      </Box>
 
-      <Grid item sx={{ width: { xs: '100%', sm: '33.33%' } }}>
+      <Box sx={{ flexBasis: { xs: '100%', sm: 'calc(33.33% - 16px)' } }}>
         <LearningStatsCard 
           value={totalHoursLearned}
           label="Total Hours Learned"
           color="#36d1a1"
           bgColor="rgba(54, 209, 161, 0.15)"
         />
-      </Grid>
+      </Box>
 
-      <Grid item sx={{ width: { xs: '100%', sm: '33.33%' } }}>
+      <Box sx={{ flexBasis: { xs: '100%', sm: 'calc(33.33% - 16px)' } }}>
         <LearningStatsCard 
           value={hoursThisWeek}
           label="Weekly Goal Progress"
@@ -48,7 +48,7 @@ export const LearningStatsGrid = ({
           progressMax={weeklyGoal}
           isTime={true}
         />
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 }; 

@@ -15,7 +15,6 @@ export interface Course {
   isFeatured?: boolean;
 }
 
-// Enrolled courses - courses the user is currently taking
 export const myCoursesData: Course[] = [
   {
     id: 1,
@@ -132,7 +131,6 @@ export const recommendedCoursesData: Course[] = [
   }
 ];
 
-// Featured courses highlighted on the platform
 export const featuredCoursesData: Course[] = [
   {
     id: 8,
