@@ -1,4 +1,4 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, Divider } from '@mui/material';
 import { useState } from 'react';
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
@@ -31,6 +31,13 @@ const Overview = () => {
             categories={CATEGORIES}
             activeTab={categoryTab}
             onTabChange={handleCategoryChange}
+          />
+          
+          <Divider 
+            sx={{ 
+              borderColor: 'rgba(255, 255, 255, 0.12)',
+              width: '100%'
+            }} 
           />
           
           <CourseTabs 

@@ -13,7 +13,15 @@ const Header = () => {
     >
       <Container maxWidth="xl">
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 1, sm: 2 } }}>
-          <Typography variant="h6" fontWeight="bold" color="white">
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              fontWeight: 'bold',
+              color: 'white',
+              fontSize: '1.5rem',
+              letterSpacing: '0.5px'
+            }}
+          >
             SkillSpark
           </Typography>
           

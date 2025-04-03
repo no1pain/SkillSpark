@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import CourseCard from '../CourseCard/CourseCard';
 
 interface Course {
@@ -11,6 +11,25 @@ interface CourseGridProps {
 }
 
 const CourseGrid = ({ courses }: CourseGridProps) => {
+  if (courses.length === 0) {
+    return (
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        minHeight: '200px'
+      }}>
+        <Typography 
+          variant="h6" 
+          color="rgba(255, 255, 255, 0.7)"
+          textAlign="center"
+        >
+          No courses available yet
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{

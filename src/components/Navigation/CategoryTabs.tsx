@@ -14,11 +14,27 @@ const CategoryTab = ({ label, active, onClick }: CategoryTabProps) => (
       px: 3,
       color: active ? 'white' : 'rgba(255, 255, 255, 0.6)',
       fontWeight: active ? '600' : '400',
-      borderBottom: active ? '2px solid #4da3ff' : 'none',
+      position: 'relative',
       borderRadius: '20px',
+      minWidth: 'unset',
+      '&:after': {
+        content: '""',
+        position: 'absolute',
+        bottom: -1,
+        left: '10%',
+        width: '80%',
+        height: '2px',
+        backgroundColor: '#4da3ff',
+        borderRadius: '4px',
+        opacity: active ? 1 : 0,
+        transition: 'all 0.2s ease'
+      },
       '&:hover': {
-        backgroundColor: 'transparent',
-        color: 'white'
+        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+        color: 'white',
+        '&:after': {
+          opacity: 0.7
+        }
       }
     }}
   >
@@ -34,7 +50,17 @@ interface CategoryTabsProps {
 
 const CategoryTabs = ({ categories, activeTab, onTabChange }: CategoryTabsProps) => {
   return (
-    <Box sx={{ display: 'flex', overflow: 'auto', mb: 3, pb: 1, justifyContent: 'center' }}>
+    <Box sx={{ 
+      display: 'flex', 
+      overflow: 'auto', 
+      justifyContent: 'center',
+      gap: 1,
+      '&::-webkit-scrollbar': {
+        display: 'none'
+      },
+      msOverflowStyle: 'none',  
+      scrollbarWidth: 'none' 
+    }}>
       {categories.map((category, index) => (
         <CategoryTab 
           key={`${category}-${index}`} 
