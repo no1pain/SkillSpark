@@ -46,7 +46,7 @@ const Register = () => {
         displayName: name,
       });
 
-      navigate("/dashboard");
+      navigate("/overview");
     } catch (err: any) {
       console.error("Registration error:", err);
       setError(err.message || "Failed to create account");

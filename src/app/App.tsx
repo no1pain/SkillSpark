@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-import Dashboard from '../pages/Dashboard';
+import Overview from '../pages/Overview';
 import ProtectedRoute from './navigation/ProtectedRoute';
 
 import '../shared/styles/global.css';
@@ -20,17 +20,17 @@ function App() {
             <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
             <Route path="/register" element={<MainLayout><Register /></MainLayout>} />
             <Route 
-              path="/dashboard" 
+              path="/overview" 
               element={
                 <ProtectedRoute>
                   <MainLayout>
-                    <Dashboard />
+                    <Overview />
                   </MainLayout>
                 </ProtectedRoute>
               } 
             />
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/" element={<Navigate to="/overview" replace />} />
+            <Route path="*" element={<Navigate to="/overview" replace />} />
           </Routes>
         </Router>
       </AuthProvider>
