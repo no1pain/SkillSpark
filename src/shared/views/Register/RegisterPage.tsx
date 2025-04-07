@@ -14,12 +14,11 @@ import {
 } from "@mui/material";
 import { Icon } from "@components/Icon";
 import { useAuth, UserRole } from "@context/AuthContext";
-import { updateProfile } from "firebase/auth";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [role, setRole] = useState<UserRole>("learner");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -30,7 +29,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !role) {
+    if (!username || !email || !password || !role) {
       setError("Please fill in all fields");
       return;
     }
@@ -44,16 +43,11 @@ const RegisterPage = () => {
       setError("");
       setLoading(true);
       const userData = {
-        name,
+        username,
         email,
         role,
       };
-      const user = await signUp(email, password, userData);
-
-      await updateProfile(user, {
-        displayName: name,
-      });
-
+      await signUp(email, password, userData);
       navigate("/overview");
     } catch (err: any) {
       console.error("Registration error:", err);
@@ -166,9 +160,9 @@ const RegisterPage = () => {
               >
                 <input
                   type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Full Name"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -294,23 +288,32 @@ const RegisterPage = () => {
               {loading ? "Creating Account..." : "Sign Up"}
             </Button>
 
-            <Typography
-              variant="body2"
-              align="center"
-              sx={{ mt: 2, color: "rgba(255, 255, 255, 0.7)" }}
-            >
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                style={{
-                  color: "#4da3ff",
-                  textDecoration: "none",
-                  fontWeight: 500,
-                }}
+            <Box sx={{ mt: 3, textAlign: "center" }}>
+              <Typography
+                variant="body2"
+                color="#888888"
+                sx={{ fontSize: "13px", textAlign: "center" }}
               >
-                Sign in
-              </Link>
-            </Typography>
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
+                  Sign in
+                </Link>
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                mt: 4,
+                width: "40%",
+                height: "4px",
+                bgcolor: "#333333",
+                borderRadius: 2,
+                mx: "auto",
+              }}
+            />
           </Box>
         </Paper>
       </Container>

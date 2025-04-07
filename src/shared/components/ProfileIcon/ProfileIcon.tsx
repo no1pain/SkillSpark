@@ -16,6 +16,9 @@ export const ProfileIcon = () => {
   const navigate = useNavigate();
   const { currentUser, userData } = useAuth();
 
+  console.log("userData:", userData);
+  console.log("userRole:", userData?.role);
+
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -38,7 +41,17 @@ export const ProfileIcon = () => {
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography variant="body2" color="#333333">
+        <Typography
+          variant="body2"
+          sx={{
+            color: "#333333",
+            textTransform: "capitalize",
+            backgroundColor: "rgba(77, 163, 255, 0.1)",
+            padding: "4px 12px",
+            borderRadius: "16px",
+            fontWeight: 500,
+          }}
+        >
           {userData?.role}
         </Typography>
         <IconButton size="small" onClick={handleMenuOpen}>

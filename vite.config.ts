@@ -15,7 +15,20 @@ export default defineConfig({
       "@constants": path.resolve(__dirname, "./src/shared/constants"),
       "@pages": path.resolve(__dirname, "./src/pages"),
       "@assets": path.resolve(__dirname, "./src/assets"),
-      "@firebase": path.resolve(__dirname, "./src/firebase"),
+    },
+  },
+  optimizeDeps: {
+    include: [
+      "firebase/app",
+      "firebase/auth",
+      "firebase/firestore",
+      "firebase/storage",
+      "firebase/analytics",
+    ],
+  },
+  build: {
+    commonjsOptions: {
+      esmExternals: true,
     },
   },
 });

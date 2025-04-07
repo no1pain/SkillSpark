@@ -11,7 +11,7 @@ const firebaseConfig = {
   storageBucket: "skillspark-a4a76.appspot.com",
   messagingSenderId: "973879636137",
   appId: "1:973879636137:web:361bc439d6d120641bf9b8",
-  measurementId: "G-METH54G93R"
+  measurementId: "G-METH54G93R",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -20,4 +20,4 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export { app, analytics, auth, db, storage }; 
+export { app, analytics, auth, db, storage };
