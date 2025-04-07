@@ -43,7 +43,7 @@ const RegisterPage = () => {
       setError("");
       setLoading(true);
       const userData = {
-        username,
+        name: username,
         email,
         role,
       };
