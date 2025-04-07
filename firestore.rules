@@ -1,20 +1,13 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Users collection rules
     match /users/{userId} {
-      // Allow users to read and write only their own data
       allow read, write: if request.auth != null && request.auth.uid == userId;
-      
-      // Allow admins to read all user data (if you implement admin roles)
-      // allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
     
-    // For other collections, implement appropriate rules
-    // For now, require authentication for all operations
     match /{document=**} {
       allow read: if request.auth != null;
       allow write: if request.auth != null;
     }
   }
-} 
+}

@@ -10,16 +10,12 @@ import { auth } from "../../../firebase/config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../app/context/AuthContext";
+import { getRoleStyles, getRoleColor } from "../../utils/roleStyles";
 
 export const ProfileIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const { currentUser, userData } = useAuth();
-
-  console.log("ProfileIcon userData:", userData);
-
-  console.log("userData:", userData);
-  console.log("userRole:", userData?.role);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -46,23 +42,19 @@ export const ProfileIcon = () => {
         <Typography
           variant="body2"
           sx={{
-            color: "#333333",
             textTransform: "capitalize",
-            backgroundColor: "rgba(77, 163, 255, 0.1)",
-            padding: "4px 12px",
-            borderRadius: "16px",
-            fontWeight: 500,
+            ...getRoleStyles(userData?.role),
           }}
         >
-          {userData?.role}
+          {userData?.role || "User"}
         </Typography>
         <IconButton size="small" onClick={handleMenuOpen}>
           <Avatar
             sx={{
               width: 32,
               height: 32,
-              bgcolor: "#e0e0e0",
-              color: "#666",
+              bgcolor: getRoleColor(userData?.role),
+              color: "white",
             }}
           >
             {currentUser.email?.[0].toUpperCase()}

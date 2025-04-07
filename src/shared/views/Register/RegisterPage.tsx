@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Icon } from "@components/Icon";
 import { useAuth, UserRole } from "@context/AuthContext";
+import { getRoleColor } from "@utils/roleStyles";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -49,17 +50,14 @@ const RegisterPage = () => {
         createdAt: new Date().toISOString(),
       };
 
-      // Add user to Firebase Auth and Firestore
       await signUp(email, password, userData);
 
-      // Wait briefly to ensure data propagation
       setTimeout(() => {
         navigate("/overview");
       }, 500);
     } catch (err: any) {
       console.error("Registration error:", err);
 
-      // Show more specific error messages for common Firebase errors
       if (err.code === "auth/email-already-in-use") {
         setError(
           "This email is already registered. Please use a different email or sign in."
@@ -153,20 +151,44 @@ const RegisterPage = () => {
                     px: 3,
                     py: 1,
                     "&.Mui-selected": {
-                      bgcolor: "#4da3ff",
+                      bgcolor: "transparent",
                       color: "white",
                       "&:hover": {
-                        bgcolor: "#3d93ff",
+                        bgcolor: "rgba(255, 255, 255, 0.1)",
                       },
                     },
                     "&:hover": {
-                      bgcolor: "rgba(77, 163, 255, 0.1)",
+                      bgcolor: "rgba(255, 255, 255, 0.1)",
                     },
                   },
                 }}
               >
-                <ToggleButton value="learner">Learner</ToggleButton>
-                <ToggleButton value="creator">Creator</ToggleButton>
+                <ToggleButton
+                  value="learner"
+                  sx={{
+                    "&.Mui-selected": {
+                      bgcolor: `${getRoleColor("learner")} !important`,
+                      "&:hover": {
+                        bgcolor: "#3d93ff !important",
+                      },
+                    },
+                  }}
+                >
+                  Learner
+                </ToggleButton>
+                <ToggleButton
+                  value="creator"
+                  sx={{
+                    "&.Mui-selected": {
+                      bgcolor: `${getRoleColor("creator")} !important`,
+                      "&:hover": {
+                        bgcolor: "#ff3333 !important",
+                      },
+                    },
+                  }}
+                >
+                  Creator
+                </ToggleButton>
               </ToggleButtonGroup>
             </Box>
 
