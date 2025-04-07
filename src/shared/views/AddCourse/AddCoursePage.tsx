@@ -1,4 +1,14 @@
-import { Box, Container, Typography, Paper, styled } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Paper,
+  styled,
+  Grid as MuiGrid,
+  Card,
+  CardContent,
+  Chip,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import Header from "@/components/Header/Header";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +40,156 @@ const FormContainer = styled("div")({
   flexDirection: "column",
   paddingBottom: "40px",
 });
+
+// Define the Grid component to fix type errors
+const Grid = MuiGrid as any;
+
+// Simple Course Preview Card component
+const CourseCardPreview = ({
+  title,
+  category,
+  level,
+  price,
+  type,
+}: {
+  title: string;
+  category: string;
+  level: string;
+  price: number;
+  type: string;
+}) => {
+  // Generate a gradient based on the course category
+  const getGradientByCategory = (category: string): string => {
+    switch (category) {
+      case "Technology":
+        return "linear-gradient(135deg, #E23838 0%, #FF9933 100%)";
+      case "Creative Arts":
+        return "linear-gradient(135deg, #FF416C 0%, #FFA500 100%)";
+      case "Business":
+        return "linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%)";
+      case "Personal Development":
+        return "linear-gradient(135deg, #00B4DB 0%, #0083B0 100%)";
+      case "Finance":
+        return "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)";
+      default:
+        return "linear-gradient(135deg, #6200ee 0%, #9c40ff 100%)"; // Violet gradient as default
+    }
+  };
+
+  return (
+    <Card
+      sx={{
+        borderRadius: 2,
+        overflow: "hidden",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <Box
+        sx={{ position: "relative", paddingTop: "56.25%", overflow: "hidden" }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: getGradientByCategory(category),
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography
+            variant="h5"
+            color="white"
+            fontWeight="bold"
+            align="center"
+          >
+            {type === "course" ? "📹" : "📚"}
+          </Typography>
+        </Box>
+        <Chip
+          label={category || "Category"}
+          size="small"
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            color: "white",
+            borderRadius: "4px",
+            fontSize: "0.7rem",
+          }}
+        />
+      </Box>
+      <CardContent
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          p: 2,
+        }}
+      >
+        <Box>
+          <Typography variant="subtitle1" fontWeight="medium" gutterBottom>
+            {title || "Your Course Title"}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              mb: 1,
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              fontSize="0.8rem"
+            >
+              Your Name
+            </Typography>
+            <Chip
+              label={level}
+              size="small"
+              sx={{
+                height: 18,
+                fontSize: "0.6rem",
+                backgroundColor:
+                  level === "Beginner"
+                    ? "rgba(98, 0, 238, 0.1)"
+                    : level === "Intermediate"
+                    ? "rgba(98, 0, 238, 0.2)"
+                    : "rgba(98, 0, 238, 0.3)",
+                color: "#6200ee",
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mt: 2,
+            }}
+          >
+            <Typography variant="body1" fontWeight="bold" color="#6200ee">
+              ${price.toFixed(2)}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {type === "course" ? "Course" : "Book"}
+            </Typography>
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};
 
 interface CourseFormData {
   title: string;
@@ -148,6 +308,12 @@ const AddCoursePage = () => {
 
   const isLastStep = activeStep === steps.length - 1;
 
+  // Get the category name from the category ID
+  const categoryName = formData.category
+    ? topCategories.find((cat) => cat.id === formData.category)?.name ||
+      "Category"
+    : "Category";
+
   return (
     <PageWrapper>
       <Header />
@@ -180,35 +346,82 @@ const AddCoursePage = () => {
             isLastStep={isLastStep}
           />
 
-          <Paper
-            elevation={3}
-            sx={{
-              p: 4,
-              bgcolor: "#fff",
-              borderRadius: 2,
-              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-              mb: 3,
-            }}
-          >
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (isLastStep) handleSubmit();
-                else handleNext();
-              }}
-            >
-              <CourseFormStepContent
-                step={activeStep}
-                formData={formData}
-                topCategories={topCategories}
-                subcategories={subcategories}
-                onCategoryChange={handleCategoryChange}
-                onTypeSelect={handleTypeSelect}
-                onChange={handleChange}
-                onPublicPrivateChange={handlePublicPrivateChange}
-              />
-            </form>
-          </Paper>
+          <Grid container spacing={2}>
+            {/* Preview Card Column */}
+            <Grid item xs={12} md={3}>
+              <Box
+                sx={{
+                  position: "sticky",
+                  top: 20,
+                  p: 2,
+                  backgroundColor: "rgba(245, 245, 245, 0.7)",
+                  borderRadius: 2,
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  component="div"
+                  align="center"
+                  mb={2}
+                  color="#666"
+                >
+                  Course Preview
+                </Typography>
+                <Box sx={{ width: "100%", mx: "auto" }}>
+                  <CourseCardPreview
+                    title={formData.title}
+                    category={categoryName}
+                    level={formData.level}
+                    price={formData.price ? parseFloat(formData.price) : 49.99}
+                    type={formData.type}
+                  />
+                </Box>
+                <Typography
+                  variant="caption"
+                  component="div"
+                  align="center"
+                  mt={2}
+                  color="#888"
+                >
+                  This is how your course will appear to learners
+                </Typography>
+              </Box>
+            </Grid>
+
+            {/* Form Column */}
+            <Grid item xs={12} md={9}>
+              <Paper
+                elevation={3}
+                sx={{
+                  p: { xs: 2, md: 3 },
+                  bgcolor: "#fff",
+                  borderRadius: 2,
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                  mb: 3,
+                }}
+              >
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (isLastStep) handleSubmit();
+                    else handleNext();
+                  }}
+                >
+                  <CourseFormStepContent
+                    step={activeStep}
+                    formData={formData}
+                    topCategories={topCategories}
+                    subcategories={subcategories}
+                    onCategoryChange={handleCategoryChange}
+                    onTypeSelect={handleTypeSelect}
+                    onChange={handleChange}
+                    onPublicPrivateChange={handlePublicPrivateChange}
+                  />
+                </form>
+              </Paper>
+            </Grid>
+          </Grid>
 
           <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
             <CancelButton onClick={handleCancel} />

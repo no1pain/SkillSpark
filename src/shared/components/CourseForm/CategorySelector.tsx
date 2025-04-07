@@ -27,8 +27,8 @@ const CategorySelector = ({
   onSubcategoryChange,
 }: CategorySelectorProps) => {
   return (
-    <Box mb={6}>
-      <Typography variant="h6" component="div" align="center" mb={3}>
+    <Box mb={4}>
+      <Typography variant="h6" component="div" align="center" mb={2}>
         <Box
           sx={{
             display: "flex",
@@ -42,7 +42,7 @@ const CategorySelector = ({
               width: 28,
               height: 28,
               borderRadius: "50%",
-              backgroundColor: "#4da3ff",
+              backgroundColor: "#6200ee",
               color: "white",
               display: "flex",
               alignItems: "center",
@@ -72,6 +72,7 @@ const CategorySelector = ({
               fullWidth
               required
               variant="outlined"
+              size="small"
             >
               {topCategories.map((category) => (
                 <MenuItem key={category.id} value={category.id}>
@@ -91,6 +92,7 @@ const CategorySelector = ({
               fullWidth
               required
               variant="outlined"
+              size="small"
               disabled={subcategories.length === 0}
             >
               {subcategories.map((subcategory) => (

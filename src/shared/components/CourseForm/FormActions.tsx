@@ -65,8 +65,8 @@ const FormActions = ({
             variant="contained"
             onClick={(e) => onNext(e)}
             sx={{
-              bgcolor: "#4da3ff",
-              "&:hover": { bgcolor: "#3d93ff" },
+              bgcolor: "#6200ee",
+              "&:hover": { bgcolor: "#5000d1" },
             }}
             endIcon={isLastStep ? <CheckIcon /> : <ArrowForwardIcon />}
           >

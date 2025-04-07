@@ -56,15 +56,17 @@ export const ProfileIcon = () => {
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography
-          variant="body2"
-          sx={{
-            textTransform: "capitalize",
-            ...getRoleStyles(userData?.role),
-          }}
-        >
-          {userData?.role || "User"}
-        </Typography>
+        {isCreator && (
+          <Typography
+            variant="body2"
+            sx={{
+              textTransform: "capitalize",
+              ...getRoleStyles(userData?.role),
+            }}
+          >
+            Creator
+          </Typography>
+        )}
         <IconButton size="small" onClick={handleMenuOpen}>
           <Avatar
             sx={{

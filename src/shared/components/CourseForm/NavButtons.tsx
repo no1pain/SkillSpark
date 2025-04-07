@@ -50,13 +50,13 @@ const NavButtons = ({
             right: "5%",
             top: "50%",
             transform: "translateY(-50%)",
-            bgcolor: "#4da3ff",
+            bgcolor: "#6200ee",
             color: "white",
-            boxShadow: "0 4px 8px rgba(77, 163, 255, 0.3)",
+            boxShadow: "0 4px 8px rgba(98, 0, 238, 0.3)",
             width: 50,
             height: 50,
             "&:hover": {
-              bgcolor: "#3d93ff",
+              bgcolor: "#5000d1",
             },
           }}
         >
@@ -72,13 +72,13 @@ const NavButtons = ({
             right: "5%",
             top: "50%",
             transform: "translateY(-50%)",
-            bgcolor: "#4da3ff",
+            bgcolor: "#6200ee",
             color: "white",
-            boxShadow: "0 4px 8px rgba(77, 163, 255, 0.3)",
+            boxShadow: "0 4px 8px rgba(98, 0, 238, 0.3)",
             width: 50,
             height: 50,
             "&:hover": {
-              bgcolor: "#3d93ff",
+              bgcolor: "#5000d1",
             },
           }}
         >

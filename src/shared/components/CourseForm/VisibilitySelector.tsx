@@ -16,7 +16,7 @@ const VisibilitySelector = ({
   onChange,
 }: VisibilitySelectorProps) => {
   return (
-    <Box mb={6}>
+    <Box mb={4}>
       <Typography variant="h6" component="div" align="center" mb={2}>
         <Box
           component="span"
@@ -28,7 +28,7 @@ const VisibilitySelector = ({
               width: 28,
               height: 28,
               borderRadius: "50%",
-              backgroundColor: "#4da3ff",
+              backgroundColor: "#6200ee",
               color: "white",
               display: "inline-flex",
               alignItems: "center",
@@ -44,7 +44,7 @@ const VisibilitySelector = ({
         </Box>
       </Typography>
 
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
         <RadioGroup
           row
           name="visibility"
@@ -71,8 +71,8 @@ const VisibilitySelector = ({
               overflow: "hidden",
               borderRadius: "30px",
               border: "1px solid #e0e0e0",
-              width: 300,
-              height: 50,
+              width: 280,
+              height: 46,
             }}
           >
             <Box
@@ -83,7 +83,7 @@ const VisibilitySelector = ({
               }
               sx={{
                 flex: 1,
-                backgroundColor: !isPublic ? "#4da3ff" : "#f5f5f5",
+                backgroundColor: !isPublic ? "#6200ee" : "#f5f5f5",
                 color: !isPublic ? "white" : "#666",
                 display: "flex",
                 alignItems: "center",
@@ -103,7 +103,7 @@ const VisibilitySelector = ({
               }
               sx={{
                 flex: 1,
-                backgroundColor: isPublic ? "#4da3ff" : "#f5f5f5",
+                backgroundColor: isPublic ? "#6200ee" : "#f5f5f5",
                 color: isPublic ? "white" : "#666",
                 display: "flex",
                 alignItems: "center",

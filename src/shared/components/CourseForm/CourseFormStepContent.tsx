@@ -46,7 +46,7 @@ const CourseFormStepContent = ({
     switch (step) {
       case 0:
         return (
-          <>
+          <Box sx={{ maxWidth: "100%", width: "100%" }}>
             <CategorySelector
               topCategories={topCategories}
               subcategories={subcategories}
@@ -65,13 +65,13 @@ const CourseFormStepContent = ({
               selectedType={formData.type}
               onTypeSelect={onTypeSelect}
             />
-          </>
+          </Box>
         );
       case 1:
         return (
-          <>
-            <Box mb={6}>
-              <Typography variant="h6" component="div" align="center" mb={3}>
+          <Box sx={{ maxWidth: "100%", width: "100%" }}>
+            <Box mb={4}>
+              <Typography variant="h6" component="div" align="center" mb={2}>
                 <Box
                   component="span"
                   sx={{ display: "inline-flex", alignItems: "center" }}
@@ -82,7 +82,7 @@ const CourseFormStepContent = ({
                       width: 28,
                       height: 28,
                       borderRadius: "50%",
-                      backgroundColor: "#4da3ff",
+                      backgroundColor: "#6200ee",
                       color: "white",
                       display: "inline-flex",
                       alignItems: "center",
@@ -112,13 +112,13 @@ const CourseFormStepContent = ({
               type={formData.type}
               onChange={onChange}
             />
-          </>
+          </Box>
         );
       case 2:
         return (
-          <>
+          <Box sx={{ maxWidth: "100%", width: "100%" }}>
             <AdditionalInfo level={formData.level} onChange={onChange} />
-          </>
+          </Box>
         );
       default:
         return null;
