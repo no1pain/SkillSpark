@@ -320,10 +320,11 @@ const AddCoursePage = () => {
 
       <FormContainer>
         <Container
-          maxWidth="lg"
           sx={{
             pt: 0,
             mt: 0,
+            px: { xs: 2, md: 4 },
+            maxWidth: "100%",
           }}
         >
           <Typography
@@ -346,9 +347,21 @@ const AddCoursePage = () => {
             isLastStep={isLastStep}
           />
 
-          <Grid container spacing={2}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              width: "100%",
+              gap: 3,
+            }}
+          >
             {/* Preview Card Column */}
-            <Grid item xs={12} md={3}>
+            <Box
+              sx={{
+                width: { xs: "100%", md: "25%", lg: "20%" },
+                flexShrink: 0,
+              }}
+            >
               <Box
                 sx={{
                   position: "sticky",
@@ -387,10 +400,15 @@ const AddCoursePage = () => {
                   This is how your course will appear to learners
                 </Typography>
               </Box>
-            </Grid>
+            </Box>
 
             {/* Form Column */}
-            <Grid item xs={12} md={9}>
+            <Box
+              sx={{
+                width: { xs: "100%", md: "75%", lg: "80%" },
+                flexGrow: 1,
+              }}
+            >
               <Paper
                 elevation={3}
                 sx={{
@@ -399,9 +417,13 @@ const AddCoursePage = () => {
                   borderRadius: 2,
                   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                   mb: 3,
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
                 <form
+                  style={{ width: "100%" }}
                   onSubmit={(e) => {
                     e.preventDefault();
                     if (isLastStep) handleSubmit();
@@ -420,8 +442,8 @@ const AddCoursePage = () => {
                   />
                 </form>
               </Paper>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
 
           <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
             <CancelButton onClick={handleCancel} />

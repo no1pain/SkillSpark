@@ -42,11 +42,20 @@ const CourseFormStepContent = ({
   onChange,
   onPublicPrivateChange,
 }: CourseFormStepContentProps) => {
+  const containerStyles = {
+    maxWidth: "100%",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "stretch" as const,
+    flexGrow: 1,
+  };
+
   const renderContent = () => {
     switch (step) {
       case 0:
         return (
-          <Box sx={{ maxWidth: "100%", width: "100%" }}>
+          <Box sx={containerStyles}>
             <CategorySelector
               topCategories={topCategories}
               subcategories={subcategories}
@@ -69,7 +78,7 @@ const CourseFormStepContent = ({
         );
       case 1:
         return (
-          <Box sx={{ maxWidth: "100%", width: "100%" }}>
+          <Box sx={containerStyles}>
             <Box mb={4}>
               <Typography variant="h6" component="div" align="center" mb={2}>
                 <Box
@@ -116,7 +125,7 @@ const CourseFormStepContent = ({
         );
       case 2:
         return (
-          <Box sx={{ maxWidth: "100%", width: "100%" }}>
+          <Box sx={containerStyles}>
             <AdditionalInfo level={formData.level} onChange={onChange} />
           </Box>
         );
@@ -125,7 +134,19 @@ const CourseFormStepContent = ({
     }
   };
 
-  return <>{renderContent()}</>;
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch",
+        flexGrow: 1,
+      }}
+    >
+      {renderContent()}
+    </Box>
+  );
 };
 
 export default CourseFormStepContent;

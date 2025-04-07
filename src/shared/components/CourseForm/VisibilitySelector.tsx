@@ -16,7 +16,7 @@ const VisibilitySelector = ({
   onChange,
 }: VisibilitySelectorProps) => {
   return (
-    <Box mb={4}>
+    <Box mb={4} sx={{ width: "100%" }}>
       <Typography variant="h6" component="div" align="center" mb={2}>
         <Box
           component="span"
@@ -44,7 +44,9 @@ const VisibilitySelector = ({
         </Box>
       </Typography>
 
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", mt: 1, width: "100%" }}
+      >
         <RadioGroup
           row
           name="visibility"
@@ -52,6 +54,8 @@ const VisibilitySelector = ({
           onChange={onChange}
           sx={{
             "& .MuiRadio-root": { display: "none" },
+            width: { xs: "90%", sm: "70%", md: "50%", lg: "40%" },
+            maxWidth: "500px",
           }}
         >
           <FormControlLabel
@@ -71,7 +75,7 @@ const VisibilitySelector = ({
               overflow: "hidden",
               borderRadius: "30px",
               border: "1px solid #e0e0e0",
-              width: 280,
+              width: "100%",
               height: 46,
             }}
           >

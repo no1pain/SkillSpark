@@ -85,8 +85,8 @@ const CourseTypeSelector = ({
         </Box>
       </Typography>
 
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={6} md={3}>
+      <Grid container spacing={3} justifyContent="center">
+        <Grid item xs={6} sm={4} md={3} lg={2}>
           <TypeSelectionOption
             selected={selectedType === "course"}
             onClick={() => onTypeSelect("course")}
@@ -102,7 +102,7 @@ const CourseTypeSelector = ({
             </Typography>
           </TypeSelectionOption>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={6} sm={4} md={3} lg={2}>
           <TypeSelectionOption
             selected={selectedType === "book"}
             onClick={() => onTypeSelect("book")}
