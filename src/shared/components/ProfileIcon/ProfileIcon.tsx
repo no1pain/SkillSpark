@@ -16,6 +16,8 @@ export const ProfileIcon = () => {
   const navigate = useNavigate();
   const { currentUser, userData } = useAuth();
 
+  console.log("ProfileIcon userData:", userData);
+
   console.log("userData:", userData);
   console.log("userRole:", userData?.role);
 

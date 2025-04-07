@@ -17,6 +17,10 @@ interface UserData {
   role: UserRole;
   name: string;
   email: string;
+  uid?: string;
+  createdAt?: string;
+  profilePicture?: string;
+  bio?: string;
 }
 
 interface AuthContextProps {
@@ -92,13 +96,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     password: string,
     userData: UserData
   ): Promise<User> => {
-    const response = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    await setDoc(doc(db, "users", response.user.uid), userData);
-    return response.user;
+    let userCredential;
+    try {
+      userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        ...userData,
+        createdAt: new Date().toISOString(),
+        uid: userCredential.user.uid,
+      });
+
+      const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+      if (!userDoc.exists()) {
+        throw new Error("Failed to save user data to Firestore");
+      }
+
+      setUserData(userDoc.data() as UserData);
+
+      return userCredential.user;
+    } catch (error) {
+      if (userCredential?.user) {
+        try {
+          console.error("Error saving user data, deleting auth user:", error);
+          await userCredential.user.delete();
+        } catch (deleteError) {
+          console.error(
+            "Error deleting auth user after Firestore failure:",
+            deleteError
+          );
+        }
+      }
+      throw error;
+    }
   };
 
   const signOut = () => {

@@ -46,12 +46,37 @@ const RegisterPage = () => {
         name: username,
         email,
         role,
+        createdAt: new Date().toISOString(),
       };
+
+      // Add user to Firebase Auth and Firestore
       await signUp(email, password, userData);
-      navigate("/overview");
+
+      // Wait briefly to ensure data propagation
+      setTimeout(() => {
+        navigate("/overview");
+      }, 500);
     } catch (err: any) {
       console.error("Registration error:", err);
-      setError(err.message || "Failed to create account");
+
+      // Show more specific error messages for common Firebase errors
+      if (err.code === "auth/email-already-in-use") {
+        setError(
+          "This email is already registered. Please use a different email or sign in."
+        );
+      } else if (err.code === "auth/invalid-email") {
+        setError("Please enter a valid email address.");
+      } else if (err.code === "auth/weak-password") {
+        setError(
+          "Password is too weak. Please use a stronger password with at least 6 characters."
+        );
+      } else if (err.code === "auth/network-request-failed") {
+        setError(
+          "Network error. Please check your internet connection and try again."
+        );
+      } else {
+        setError(err.message || "Failed to create account");
+      }
     } finally {
       setLoading(false);
     }
