@@ -5,7 +5,6 @@ import {
   MenuItem,
   Typography,
   Box,
-  Divider,
   ListItemIcon,
 } from "@mui/material";
 import { auth } from "../../../firebase/config";
@@ -95,11 +94,27 @@ export const ProfileIcon = () => {
           elevation: 3,
           sx: {
             minWidth: "200px",
-            borderRadius: "10px",
+            borderRadius: "8px",
             mt: 1,
+            backgroundColor: "#2a2a2a",
+            color: "white",
             "& .MuiMenuItem-root": {
               px: 2,
-              py: 1.25,
+              py: 1.5,
+              borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+              "&:last-child": {
+                borderBottom: "none",
+              },
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.05)",
+              },
+            },
+            "& .MuiListItemIcon-root": {
+              minWidth: "40px",
+              color: "white",
+            },
+            "& .MuiDivider-root": {
+              borderColor: "rgba(255, 255, 255, 0.1)",
             },
           },
         }}
@@ -107,26 +122,24 @@ export const ProfileIcon = () => {
         {isCreator && (
           <MenuItem onClick={handleAddCourse}>
             <ListItemIcon>
-              <AddIcon fontSize="small" />
+              <AddIcon fontSize="small" sx={{ color: "white" }} />
             </ListItemIcon>
-            Add Course
+            <Typography sx={{ color: "white" }}>Add Course</Typography>
           </MenuItem>
         )}
 
         <MenuItem onClick={handleSettings}>
           <ListItemIcon>
-            <SettingsIcon fontSize="small" />
+            <SettingsIcon fontSize="small" sx={{ color: "white" }} />
           </ListItemIcon>
-          Settings
+          <Typography sx={{ color: "white" }}>Settings</Typography>
         </MenuItem>
 
-        <Divider />
-
-        <MenuItem onClick={handleSignOut}>
+        <MenuItem onClick={handleSignOut} sx={{ color: "#ff5252" }}>
           <ListItemIcon>
-            <LogoutIcon fontSize="small" color="error" />
+            <LogoutIcon fontSize="small" sx={{ color: "#ff5252" }} />
           </ListItemIcon>
-          <Typography color="error">Sign out</Typography>
+          <Typography sx={{ color: "#ff5252" }}>Sign out</Typography>
         </MenuItem>
       </Menu>
     </>

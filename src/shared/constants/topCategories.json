@@ -1,0 +1,32 @@
+[
+  {
+    "id": "technology",
+    "name": "TECHNOLOGY",
+    "displayOrder": 1
+  },
+  {
+    "id": "creative-arts",
+    "name": "CREATIVE ARTS",
+    "displayOrder": 2
+  },
+  {
+    "id": "business",
+    "name": "BUSINESS",
+    "displayOrder": 3
+  },
+  {
+    "id": "personal-development",
+    "name": "PERSONAL DEVELOPMENT",
+    "displayOrder": 4
+  },
+  {
+    "id": "health",
+    "name": "HEALTH & FITNESS",
+    "displayOrder": 5
+  },
+  {
+    "id": "languages",
+    "name": "LANGUAGES",
+    "displayOrder": 6
+  }
+]

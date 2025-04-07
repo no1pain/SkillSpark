@@ -1,0 +1,189 @@
+{
+  "technology": [
+    {
+      "id": "data-science",
+      "name": "Data Science",
+      "displayOrder": 1
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "displayOrder": 2
+    },
+    {
+      "id": "machine-learning",
+      "name": "Machine Learning",
+      "displayOrder": 3
+    },
+    {
+      "id": "deep-learning",
+      "name": "Deep Learning",
+      "displayOrder": 4
+    },
+    {
+      "id": "web-development",
+      "name": "Web Development",
+      "displayOrder": 5
+    },
+    {
+      "id": "mobile-development",
+      "name": "Mobile Development",
+      "displayOrder": 6
+    },
+    {
+      "id": "game-development",
+      "name": "Game Development",
+      "displayOrder": 7
+    },
+    {
+      "id": "cloud-computing",
+      "name": "Cloud Computing",
+      "displayOrder": 8
+    }
+  ],
+  "creative-arts": [
+    {
+      "id": "graphic-design",
+      "name": "Graphic Design",
+      "displayOrder": 1
+    },
+    {
+      "id": "digital-photography",
+      "name": "Digital Photography",
+      "displayOrder": 2
+    },
+    {
+      "id": "illustration",
+      "name": "Illustration",
+      "displayOrder": 3
+    },
+    {
+      "id": "animation",
+      "name": "Animation",
+      "displayOrder": 4
+    },
+    {
+      "id": "video-production",
+      "name": "Video Production",
+      "displayOrder": 5
+    },
+    {
+      "id": "music-production",
+      "name": "Music Production",
+      "displayOrder": 6
+    }
+  ],
+  "business": [
+    {
+      "id": "entrepreneurship",
+      "name": "Entrepreneurship",
+      "displayOrder": 1
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "displayOrder": 2
+    },
+    {
+      "id": "digital-marketing",
+      "name": "Digital Marketing",
+      "displayOrder": 3
+    },
+    {
+      "id": "sales",
+      "name": "Sales",
+      "displayOrder": 4
+    },
+    {
+      "id": "project-management",
+      "name": "Project Management",
+      "displayOrder": 5
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "displayOrder": 6
+    }
+  ],
+  "personal-development": [
+    {
+      "id": "productivity",
+      "name": "Productivity",
+      "displayOrder": 1
+    },
+    {
+      "id": "leadership",
+      "name": "Leadership",
+      "displayOrder": 2
+    },
+    {
+      "id": "communication",
+      "name": "Communication",
+      "displayOrder": 3
+    },
+    {
+      "id": "public-speaking",
+      "name": "Public Speaking",
+      "displayOrder": 4
+    },
+    {
+      "id": "mindfulness",
+      "name": "Mindfulness",
+      "displayOrder": 5
+    }
+  ],
+  "health": [
+    {
+      "id": "fitness",
+      "name": "Fitness",
+      "displayOrder": 1
+    },
+    {
+      "id": "nutrition",
+      "name": "Nutrition",
+      "displayOrder": 2
+    },
+    {
+      "id": "yoga",
+      "name": "Yoga",
+      "displayOrder": 3
+    },
+    {
+      "id": "mental-health",
+      "name": "Mental Health",
+      "displayOrder": 4
+    }
+  ],
+  "languages": [
+    {
+      "id": "english",
+      "name": "English",
+      "displayOrder": 1
+    },
+    {
+      "id": "spanish",
+      "name": "Spanish",
+      "displayOrder": 2
+    },
+    {
+      "id": "french",
+      "name": "French",
+      "displayOrder": 3
+    },
+    {
+      "id": "german",
+      "name": "German",
+      "displayOrder": 4
+    },
+    {
+      "id": "japanese",
+      "name": "Japanese",
+      "displayOrder": 5
+    },
+    {
+      "id": "chinese",
+      "name": "Chinese",
+      "displayOrder": 6
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import {
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Overview from "../pages/Overview";
+import AddCourse from "../pages/AddCourse";
 import ProtectedRoute from "./navigation/ProtectedRoute";
 
 import "../shared/styles/global.css";
@@ -44,6 +45,16 @@ function App() {
                 <MainLayout>
                   <Overview />
                 </MainLayout>
+              }
+            />
+            <Route
+              path="/add-course"
+              element={
+                <ProtectedRoute requiredRole="creator">
+                  <MainLayout>
+                    <AddCourse />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
             <Route path="/" element={<Navigate to="/overview" replace />} />

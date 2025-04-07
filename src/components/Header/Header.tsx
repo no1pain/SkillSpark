@@ -54,7 +54,7 @@ const Header = () => {
               <Button
                 sx={{
                   textTransform: "none",
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   px: 2,
                   color: "#333333",
                   display: { xs: "none", sm: "flex" },
@@ -86,7 +86,7 @@ const Header = () => {
                 <Button
                   sx={{
                     textTransform: "none",
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     px: 2,
                     color: "#333333",
                     display: { xs: "none", sm: "block" },
@@ -94,7 +94,7 @@ const Header = () => {
                   }}
                   onClick={() => navigate("/my-courses")}
                 >
-                  My Courses
+                  My learning
                 </Button>
                 <ProfileIcon />
               </>
@@ -107,7 +107,7 @@ const Header = () => {
                     textTransform: "none",
                     fontSize: "0.9rem",
                     fontWeight: "normal",
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     px: 2,
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.04)",
@@ -127,7 +127,7 @@ const Header = () => {
                       bgcolor: "#3d93ff",
                     },
                     textTransform: "none",
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     px: 3,
                     py: 0.7,
                     fontSize: "0.9rem",
