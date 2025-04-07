@@ -20,7 +20,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       }}
     >
       {children}
-      
+
       <Box
         sx={{
           position: "absolute",
@@ -33,16 +33,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       >
         <Typography
           variant="body2"
-          sx={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "13px" }}
+          sx={{ color: "rgba(0, 0, 0, 0.7)", fontSize: "13px" }}
         >
           Join our community on{" "}
           <Box
             component="span"
-            sx={{ 
-              color: "#4da3ff", 
+            sx={{
+              color: "#4da3ff",
               cursor: "pointer",
               fontWeight: 500,
-              '&:hover': { textDecoration: 'underline' }
+              "&:hover": { textDecoration: "underline" },
             }}
           >
             Twitter
@@ -50,11 +50,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           and{" "}
           <Box
             component="span"
-            sx={{ 
-              color: "#5865F2", 
+            sx={{
+              color: "#5865F2",
               cursor: "pointer",
               fontWeight: 500,
-              '&:hover': { textDecoration: 'underline' }
+              "&:hover": { textDecoration: "underline" },
             }}
           >
             Discord

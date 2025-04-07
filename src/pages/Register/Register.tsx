@@ -9,15 +9,18 @@ import {
   IconButton,
   Snackbar,
   Alert,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 import { Icon } from "../../shared/components/Icon";
-import { useAuth } from "../../app/context/AuthContext";
+import { useAuth, UserRole } from "../../app/context/AuthContext";
 import { updateProfile } from "firebase/auth";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [role, setRole] = useState<UserRole>("learner");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,7 +30,7 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !role) {
       setError("Please fill in all fields");
       return;
     }
@@ -40,7 +43,12 @@ const Register = () => {
     try {
       setError("");
       setLoading(true);
-      const user = await signUp(email, password);
+      const userData = {
+        name,
+        email,
+        role,
+      };
+      const user = await signUp(email, password, userData);
 
       await updateProfile(user, {
         displayName: name,
@@ -57,6 +65,15 @@ const Register = () => {
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleRoleChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    newRole: UserRole | null
+  ) => {
+    if (newRole !== null) {
+      setRole(newRole);
+    }
   };
 
   return (
@@ -102,6 +119,38 @@ const Register = () => {
           </Typography>
 
           <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+            <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
+              <ToggleButtonGroup
+                value={role}
+                exclusive
+                onChange={handleRoleChange}
+                aria-label="user role"
+                sx={{
+                  bgcolor: "rgba(60, 60, 60, 0.5)",
+                  borderRadius: 8,
+                  "& .MuiToggleButton-root": {
+                    color: "white",
+                    border: "none",
+                    px: 3,
+                    py: 1,
+                    "&.Mui-selected": {
+                      bgcolor: "#4da3ff",
+                      color: "white",
+                      "&:hover": {
+                        bgcolor: "#3d93ff",
+                      },
+                    },
+                    "&:hover": {
+                      bgcolor: "rgba(77, 163, 255, 0.1)",
+                    },
+                  },
+                }}
+              >
+                <ToggleButton value="learner">Learner</ToggleButton>
+                <ToggleButton value="creator">Creator</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
+
             <Box
               sx={{
                 mb: 1.5,
@@ -245,64 +294,24 @@ const Register = () => {
               {loading ? "Creating Account..." : "Sign Up"}
             </Button>
 
-            <Button
-              fullWidth
-              variant="outlined"
-              sx={{
-                height: "48px",
-                borderColor: "rgba(255, 255, 255, 0.1)",
-                color: "white",
-                borderRadius: 8,
-                textTransform: "none",
-                "&:hover": {
-                  borderColor: "rgba(255, 255, 255, 0.2)",
-                  bgcolor: "rgba(63, 63, 70, 0.1)",
-                },
-                boxShadow: "none",
-                fontSize: "15px",
-                fontWeight: 400,
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "100%",
-                }}
-              >
-                <Icon name="apple" size={18} color="#FFFFFF" sx={{ mr: 1 }} />
-                Sign up with Apple
-              </Box>
-            </Button>
-          </Box>
-
-          <Box sx={{ mt: 3, textAlign: "center" }}>
             <Typography
               variant="body2"
-              color="#888888"
-              sx={{ fontSize: "13px" }}
+              align="center"
+              sx={{ mt: 2, color: "rgba(255, 255, 255, 0.7)" }}
             >
               Already have an account?{" "}
               <Link
                 to="/login"
-                style={{ color: "white", textDecoration: "none" }}
+                style={{
+                  color: "#4da3ff",
+                  textDecoration: "none",
+                  fontWeight: 500,
+                }}
               >
                 Sign in
               </Link>
             </Typography>
           </Box>
-
-          <Box
-            sx={{
-              mt: 4,
-              width: "40%",
-              height: "4px",
-              bgcolor: "#333333",
-              borderRadius: 2,
-            }}
-          />
         </Paper>
       </Container>
 
@@ -310,11 +319,12 @@ const Register = () => {
         open={!!error}
         autoHideDuration={6000}
         onClose={() => setError("")}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert
           onClose={() => setError("")}
           severity="error"
-          sx={{ width: "100%", bgcolor: "#2A2A2A", color: "white" }}
+          sx={{ width: "100%" }}
         >
           {error}
         </Alert>

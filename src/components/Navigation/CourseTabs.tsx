@@ -12,7 +12,7 @@ const CourseTab = ({ label, active, onClick }: CourseTabProps) => (
     sx={{
       py: 1.5,
       px: 3,
-      color: active ? "white" : "rgba(255, 255, 255, 0.6)",
+      color: active ? "white" : "rgba(0, 0, 0, 0.6)",
       fontWeight: active ? "600" : "400",
       position: "relative",
       borderRadius: "20px",
@@ -20,8 +20,8 @@ const CourseTab = ({ label, active, onClick }: CourseTabProps) => (
       textTransform: "none",
       backgroundColor: active ? "#0e78e6" : "transparent",
       "&:hover": {
-        backgroundColor: active ? "#0e78e6" : "rgba(255, 255, 255, 0.03)",
-        color: "white",
+        backgroundColor: active ? "#0e78e6" : "rgba(0, 0, 0, 0.03)",
+        color: active ? "white" : "#000000",
       },
     }}
   >
@@ -37,24 +37,10 @@ interface CourseTabsProps {
 
 const CourseTabs = ({ tabs, activeTab, onTabChange }: CourseTabsProps) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        overflow: "auto",
-        height: "40px",
-        gap: 1,
-        "&::-webkit-scrollbar": {
-          display: "none",
-        },
-        mt: 6,
-        justifyContent: "center",
-        msOverflowStyle: "none",
-        scrollbarWidth: "none",
-      }}
-    >
+    <Box sx={{ justifyContent: "center", display: "flex", gap: 1, my: 3 }}>
       {tabs.map((tab, index) => (
         <CourseTab
-          key={`${tab}-${index}`}
+          key={tab}
           label={tab}
           active={index === activeTab}
           onClick={() => onTabChange(index)}
