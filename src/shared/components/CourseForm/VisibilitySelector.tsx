@@ -1,10 +1,6 @@
-import {
-  Box,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@mui/material";
+import { Box, Typography, Fade } from "@mui/material";
+import PublicIcon from "@mui/icons-material/Public";
+import LockIcon from "@mui/icons-material/Lock";
 
 interface VisibilitySelectorProps {
   isPublic: boolean;
@@ -16,8 +12,16 @@ const VisibilitySelector = ({
   onChange,
 }: VisibilitySelectorProps) => {
   return (
-    <Box mb={4} sx={{ width: "100%" }}>
-      <Typography variant="h6" component="div" align="center" mb={2}>
+    <Box
+      mb={5}
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h6" component="div" align="center" mb={3}>
         <Box
           component="span"
           sx={{ display: "inline-flex", alignItems: "center" }}
@@ -25,8 +29,8 @@ const VisibilitySelector = ({
           <Box
             component="span"
             sx={{
-              width: 28,
-              height: 28,
+              width: 32,
+              height: 32,
               borderRadius: "50%",
               backgroundColor: "#6200ee",
               color: "white",
@@ -34,8 +38,9 @@ const VisibilitySelector = ({
               alignItems: "center",
               justifyContent: "center",
               mr: 1.5,
-              fontSize: 14,
+              fontSize: 15,
               fontWeight: "bold",
+              boxShadow: "0 4px 8px rgba(98, 0, 238, 0.25)",
             }}
           >
             2
@@ -45,38 +50,34 @@ const VisibilitySelector = ({
       </Typography>
 
       <Box
-        sx={{ display: "flex", justifyContent: "center", mt: 1, width: "100%" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          mt: 3,
+          width: "100%",
+        }}
       >
-        <RadioGroup
-          row
-          name="visibility"
-          value={isPublic ? "public" : "private"}
-          onChange={onChange}
+        <Box
           sx={{
-            "& .MuiRadio-root": { display: "none" },
-            width: { xs: "90%", sm: "70%", md: "50%", lg: "40%" },
-            maxWidth: "500px",
+            width: "100%",
+            maxWidth: "400px",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <FormControlLabel
-            value="private"
-            control={<Radio />}
-            label=""
-            sx={{ margin: 0 }}
-            componentsProps={{
-              typography: {
-                sx: { display: "none" },
-              },
-            }}
-          />
           <Box
             sx={{
               display: "flex",
               overflow: "hidden",
-              borderRadius: "30px",
-              border: "1px solid #e0e0e0",
+              borderRadius: "16px",
+              border: "1px solid rgba(0, 0, 0, 0.06)",
               width: "100%",
-              height: 46,
+              height: 56,
+              backgroundColor: "rgba(246, 246, 246, 0.8)",
+              backdropFilter: "blur(8px)",
+              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.05)",
+              transition: "all 0.2s ease",
             }}
           >
             <Box
@@ -87,16 +88,40 @@ const VisibilitySelector = ({
               }
               sx={{
                 flex: 1,
-                backgroundColor: !isPublic ? "#6200ee" : "#f5f5f5",
-                color: !isPublic ? "white" : "#666",
+                position: "relative",
+                overflow: "hidden",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                transition: "all 0.3s ease",
+                transition: "all 0.15s ease",
                 fontWeight: !isPublic ? 600 : 400,
+                color: !isPublic ? "white" : "#666",
+                zIndex: 1,
+                "&:active": {
+                  transform: "scale(0.98)",
+                },
               }}
             >
+              {!isPublic && (
+                <Fade in={!isPublic}>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 3,
+                      left: 3,
+                      right: 3,
+                      bottom: 3,
+                      borderRadius: 12,
+                      backgroundColor: "#6200ee",
+                      zIndex: -1,
+                    }}
+                  />
+                </Fade>
+              )}
+              <Box sx={{ mr: 1, display: "flex" }}>
+                <LockIcon sx={{ fontSize: 20 }} />
+              </Box>
               Private
             </Box>
             <Box
@@ -107,31 +132,44 @@ const VisibilitySelector = ({
               }
               sx={{
                 flex: 1,
-                backgroundColor: isPublic ? "#6200ee" : "#f5f5f5",
-                color: isPublic ? "white" : "#666",
+                position: "relative",
+                overflow: "hidden",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                transition: "all 0.3s ease",
+                transition: "all 0.15s ease",
                 fontWeight: isPublic ? 600 : 400,
+                color: isPublic ? "white" : "#666",
+                zIndex: 1,
+                "&:active": {
+                  transform: "scale(0.98)",
+                },
               }}
             >
+              {isPublic && (
+                <Fade in={isPublic}>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 3,
+                      left: 3,
+                      right: 3,
+                      bottom: 3,
+                      borderRadius: 12,
+                      backgroundColor: "#6200ee",
+                      zIndex: -1,
+                    }}
+                  />
+                </Fade>
+              )}
+              <Box sx={{ mr: 1, display: "flex" }}>
+                <PublicIcon sx={{ fontSize: 20 }} />
+              </Box>
               Public
             </Box>
           </Box>
-          <FormControlLabel
-            value="public"
-            control={<Radio />}
-            label=""
-            sx={{ margin: 0 }}
-            componentsProps={{
-              typography: {
-                sx: { display: "none" },
-              },
-            }}
-          />
-        </RadioGroup>
+        </Box>
       </Box>
     </Box>
   );

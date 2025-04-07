@@ -18,7 +18,15 @@ const CourseFormStepper = ({
   isLastStep = false,
 }: CourseFormStepperProps) => {
   return (
-    <Box sx={{ position: "relative", mb: 8 }}>
+    <Box
+      sx={{
+        position: "relative",
+        mb: 8,
+        width: "100%",
+        maxWidth: 900,
+        mx: "auto",
+      }}
+    >
       <StyledStepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>

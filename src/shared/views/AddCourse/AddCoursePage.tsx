@@ -4,7 +4,6 @@ import {
   Typography,
   Paper,
   styled,
-  Grid as MuiGrid,
   Card,
   CardContent,
   Chip,
@@ -41,10 +40,6 @@ const FormContainer = styled("div")({
   paddingBottom: "40px",
 });
 
-// Define the Grid component to fix type errors
-const Grid = MuiGrid as any;
-
-// Simple Course Preview Card component
 const CourseCardPreview = ({
   title,
   category,
@@ -88,7 +83,7 @@ const CourseCardPreview = ({
       }}
     >
       <Box
-        sx={{ position: "relative", paddingTop: "56.25%", overflow: "hidden" }}
+        sx={{ position: "relative", paddingTop: "66.25%", overflow: "hidden" }}
       >
         <Box
           sx={{
@@ -104,7 +99,7 @@ const CourseCardPreview = ({
           }}
         >
           <Typography
-            variant="h5"
+            variant="h4"
             color="white"
             fontWeight="bold"
             align="center"
@@ -133,17 +128,23 @@ const CourseCardPreview = ({
           flexDirection: "column",
           justifyContent: "space-between",
           p: 2,
+          pb: 3,
         }}
       >
         <Box>
-          <Typography variant="subtitle1" fontWeight="medium" gutterBottom>
+          <Typography
+            variant="subtitle1"
+            fontWeight="medium"
+            gutterBottom
+            sx={{ fontSize: "1rem" }}
+          >
             {title || "Your Course Title"}
           </Typography>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              mb: 1,
+              mb: 1.5,
               justifyContent: "space-between",
             }}
           >
@@ -175,7 +176,7 @@ const CourseCardPreview = ({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              mt: 2,
+              mt: 2.5,
             }}
           >
             <Typography variant="body1" fontWeight="bold" color="#6200ee">
@@ -358,7 +359,7 @@ const AddCoursePage = () => {
             {/* Preview Card Column */}
             <Box
               sx={{
-                width: { xs: "100%", md: "25%", lg: "20%" },
+                width: { xs: "100%", md: "35%", lg: "30%" },
                 flexShrink: 0,
               }}
             >

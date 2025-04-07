@@ -25,20 +25,27 @@ const NavButtons = ({
           onClick={onBack}
           sx={{
             position: "absolute",
-            left: "5%",
+            left: { xs: "0%", sm: "5%" },
             top: "50%",
             transform: "translateY(-50%)",
-            bgcolor: "#f5f5f5",
-            color: "#555",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            width: 50,
-            height: 50,
+            bgcolor: "#f8f8f8",
+            color: "#444",
+            boxShadow: "0 6px 12px rgba(0, 0, 0, 0.08)",
+            width: 56,
+            height: 56,
+            transition: "all 0.2s ease",
             "&:hover": {
-              bgcolor: "#e0e0e0",
+              bgcolor: "#f0f0f0",
+              transform: "translateY(-50%) scale(1.05)",
+              boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
             },
+            "&:active": {
+              transform: "translateY(-50%) scale(0.98)",
+            },
+            zIndex: 2,
           }}
         >
-          <ArrowBackIcon />
+          <ArrowBackIcon fontSize="medium" />
         </IconButton>
       )}
 
@@ -47,20 +54,27 @@ const NavButtons = ({
           onClick={onNext}
           sx={{
             position: "absolute",
-            right: "5%",
+            right: { xs: "0%", sm: "5%" },
             top: "50%",
             transform: "translateY(-50%)",
             bgcolor: "#6200ee",
             color: "white",
-            boxShadow: "0 4px 8px rgba(98, 0, 238, 0.3)",
-            width: 50,
-            height: 50,
+            boxShadow: "0 6px 16px rgba(98, 0, 238, 0.25)",
+            width: 56,
+            height: 56,
+            transition: "all 0.2s ease",
             "&:hover": {
               bgcolor: "#5000d1",
+              transform: "translateY(-50%) scale(1.05)",
+              boxShadow: "0 8px 20px rgba(98, 0, 238, 0.35)",
             },
+            "&:active": {
+              transform: "translateY(-50%) scale(0.98)",
+            },
+            zIndex: 2,
           }}
         >
-          <ArrowForwardIcon />
+          <ArrowForwardIcon fontSize="medium" />
         </IconButton>
       )}
 
@@ -69,20 +83,27 @@ const NavButtons = ({
           onClick={onNext}
           sx={{
             position: "absolute",
-            right: "5%",
+            right: { xs: "0%", sm: "5%" },
             top: "50%",
             transform: "translateY(-50%)",
             bgcolor: "#6200ee",
             color: "white",
-            boxShadow: "0 4px 8px rgba(98, 0, 238, 0.3)",
-            width: 50,
-            height: 50,
+            boxShadow: "0 6px 16px rgba(98, 0, 238, 0.25)",
+            width: 56,
+            height: 56,
+            transition: "all 0.2s ease",
             "&:hover": {
               bgcolor: "#5000d1",
+              transform: "translateY(-50%) scale(1.05)",
+              boxShadow: "0 8px 20px rgba(98, 0, 238, 0.35)",
             },
+            "&:active": {
+              transform: "translateY(-50%) scale(0.98)",
+            },
+            zIndex: 2,
           }}
         >
-          <CheckCircleIcon />
+          <CheckCircleIcon fontSize="medium" />
         </IconButton>
       )}
     </>
