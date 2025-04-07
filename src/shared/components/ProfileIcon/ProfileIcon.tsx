@@ -5,12 +5,17 @@ import {
   MenuItem,
   Typography,
   Box,
+  Divider,
+  ListItemIcon,
 } from "@mui/material";
 import { auth } from "../../../firebase/config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../app/context/AuthContext";
 import { getRoleStyles, getRoleColor } from "../../utils/roleStyles";
+import AddIcon from "@mui/icons-material/Add";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export const ProfileIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -20,8 +25,19 @@ export const ProfileIcon = () => {
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleAddCourse = () => {
+    handleMenuClose();
+    navigate("/add-course");
+  };
+
+  const handleSettings = () => {
+    handleMenuClose();
+    navigate("/settings");
   };
 
   const handleSignOut = async () => {
@@ -35,6 +51,8 @@ export const ProfileIcon = () => {
   };
 
   if (!currentUser) return null;
+
+  const isCreator = userData?.role === "creator";
 
   return (
     <>
@@ -73,8 +91,43 @@ export const ProfileIcon = () => {
           vertical: "top",
           horizontal: "right",
         }}
+        PaperProps={{
+          elevation: 3,
+          sx: {
+            minWidth: "200px",
+            borderRadius: "10px",
+            mt: 1,
+            "& .MuiMenuItem-root": {
+              px: 2,
+              py: 1.25,
+            },
+          },
+        }}
       >
-        <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
+        {isCreator && (
+          <MenuItem onClick={handleAddCourse}>
+            <ListItemIcon>
+              <AddIcon fontSize="small" />
+            </ListItemIcon>
+            Add Course
+          </MenuItem>
+        )}
+
+        <MenuItem onClick={handleSettings}>
+          <ListItemIcon>
+            <SettingsIcon fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+
+        <Divider />
+
+        <MenuItem onClick={handleSignOut}>
+          <ListItemIcon>
+            <LogoutIcon fontSize="small" color="error" />
+          </ListItemIcon>
+          <Typography color="error">Sign out</Typography>
+        </MenuItem>
       </Menu>
     </>
   );

@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../app/context/AuthContext";
 import { ProfileIcon } from "../../shared/components/ProfileIcon/ProfileIcon";
+import { SearchInput } from "../../shared/components/SearchInput/SearchInput";
 
 const Header = () => {
   const { currentUser } = useAuth();
@@ -25,22 +26,30 @@ const Header = () => {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar sx={{ justifyContent: "space-between", px: { xs: 1, sm: 2 } }}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              color: "#333333",
-              fontSize: "1.5rem",
-              letterSpacing: "0.5px",
-              cursor: "pointer",
-            }}
-            onClick={() => navigate("/")}
-          >
-            SkillSpark
-          </Typography>
+        <Toolbar
+          sx={{
+            justifyContent: "space-between",
+            px: { xs: 1, sm: 0 },
+            gap: 0,
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                color: "#333333",
+                fontSize: "1.5rem",
+                letterSpacing: "0.5px",
+                cursor: "pointer",
+                flexShrink: 0,
+                mr: 2,
+              }}
+              onClick={() => navigate("/")}
+            >
+              SkillSpark
+            </Typography>
 
-          <Box sx={{ display: "flex", gap: 2 }}>
             {currentUser && (
               <Button
                 sx={{
@@ -48,16 +57,48 @@ const Header = () => {
                   borderRadius: "20px",
                   px: 2,
                   color: "#333333",
+                  display: { xs: "none", sm: "flex" },
+                  mr: 2,
                 }}
-                onClick={() => navigate("/my-courses")}
               >
-                My Courses
+                Explore
               </Button>
             )}
+
+            <SearchInput
+              maxWidth="600px"
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+              }}
+            />
           </Box>
 
-          <Box sx={{ display: "flex", gap: 1 }}>
-            {!currentUser ? (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexShrink: 0,
+            }}
+          >
+            {currentUser ? (
+              <>
+                <Button
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "20px",
+                    px: 2,
+                    color: "#333333",
+                    display: { xs: "none", sm: "block" },
+                    mr: 2,
+                  }}
+                  onClick={() => navigate("/my-courses")}
+                >
+                  My Courses
+                </Button>
+                <ProfileIcon />
+              </>
+            ) : (
               <>
                 <Button
                   variant="text"
@@ -72,6 +113,7 @@ const Header = () => {
                       backgroundColor: "rgba(0, 0, 0, 0.04)",
                       opacity: 0.8,
                     },
+                    mr: 1,
                   }}
                   onClick={() => navigate("/login")}
                 >
@@ -98,8 +140,6 @@ const Header = () => {
                   Sign up
                 </Button>
               </>
-            ) : (
-              <ProfileIcon />
             )}
           </Box>
         </Toolbar>
