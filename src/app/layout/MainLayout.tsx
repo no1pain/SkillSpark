@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -13,8 +13,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         bgcolor: "transparent",
         position: "relative",
       }}

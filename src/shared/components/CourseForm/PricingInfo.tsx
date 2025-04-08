@@ -4,6 +4,8 @@ import { COLORS } from "@/shared/constants/colors";
 import NumberedBadge from "./NumberedBadge";
 import ModernTextField from "./ModernTextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { useState, useEffect, useMemo } from "react";
 
 interface PricingInfoProps {
   price: string;
@@ -20,8 +22,24 @@ const PricingInfo = ({
   onChange,
   onFileChange,
 }: PricingInfoProps) => {
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const pdfUrl = useMemo(() => {
+    if (!selectedFile) return null;
+    return URL.createObjectURL(selectedFile);
+  }, [selectedFile]);
+
+  useEffect(() => {
+    return () => {
+      if (pdfUrl) {
+        URL.revokeObjectURL(pdfUrl);
+      }
+    };
+  }, [pdfUrl]);
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
+    setSelectedFile(file);
     if (onFileChange) {
       onFileChange(file);
     }
@@ -34,7 +52,6 @@ const PricingInfo = ({
         borderRadius: 4,
         p: 3,
         boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
-        mt: 3,
       }}
     >
       <Typography
@@ -50,7 +67,7 @@ const PricingInfo = ({
         }}
       >
         <NumberedBadge number={5} />
-        Pricing Information
+        Pricing & Content
       </Typography>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
         <ModernTextField
@@ -79,53 +96,95 @@ const PricingInfo = ({
           InputProps={{ inputProps: { min: 1 } }}
         />
 
-        {type === "book" && (
-          <Box
-            sx={{
-              mt: 2,
-              p: 3,
-              border: "2px dashed #e0e0e0",
-              borderRadius: 2,
-              backgroundColor: "#f8f8f8",
-              textAlign: "center",
-            }}
+        <Box>
+          <Typography
+            variant="subtitle2"
+            sx={{ mb: 1, color: COLORS.text.secondary }}
           >
-            <input
-              type="file"
-              accept=".pdf,.epub,.mobi"
-              onChange={handleFileChange}
-              style={{ display: "none" }}
-              id="book-content-upload"
-            />
-            <label htmlFor="book-content-upload">
-              <Button
-                component="span"
-                variant="outlined"
-                startIcon={<CloudUploadIcon />}
-                sx={{
-                  color: COLORS.primary,
-                  borderColor: COLORS.primary,
-                  "&:hover": {
-                    borderColor: COLORS.primary,
-                    backgroundColor: "rgba(98, 0, 238, 0.04)",
-                  },
-                }}
-              >
-                Upload Book Content
-              </Button>
-            </label>
-            <Typography
-              variant="caption"
+            Upload PDF *
+          </Typography>
+          <input
+            accept="application/pdf"
+            style={{ display: "none" }}
+            id="pdf-upload"
+            type="file"
+            onChange={handleFileUpload}
+          />
+          <label htmlFor="pdf-upload">
+            <Button
+              variant="outlined"
+              component="span"
+              startIcon={<CloudUploadIcon />}
               sx={{
-                display: "block",
-                mt: 1,
-                color: "text.secondary",
+                width: "100%",
+                py: 1.5,
+                border: "1px dashed",
+                borderColor: "rgba(0, 0, 0, 0.23)",
+                "&:hover": {
+                  borderColor: "primary.main",
+                },
               }}
             >
-              Supported formats: PDF, EPUB, MOBI
-            </Typography>
-          </Box>
-        )}
+              {selectedFile ? "Change PDF" : "Upload PDF"}
+            </Button>
+          </label>
+
+          {selectedFile && pdfUrl && (
+            <Box
+              sx={{
+                mt: 2,
+                p: 2,
+                border: "1px solid rgba(0, 0, 0, 0.1)",
+                borderRadius: 1,
+                backgroundColor: "rgba(0, 0, 0, 0.02)",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
+                <PictureAsPdfIcon sx={{ color: "#f40f02" }} />
+                <Box sx={{ flexGrow: 1, overflow: "hidden" }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: 500,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {selectedFile.name}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  mt: 2,
+                  width: "100%",
+                  height: "300px",
+                  border: "1px solid rgba(0, 0, 0, 0.1)",
+                  borderRadius: 1,
+                  overflow: "hidden",
+                }}
+              >
+                <iframe
+                  src={pdfUrl}
+                  width="100%"
+                  height="100%"
+                  title="PDF Preview"
+                  style={{ border: "none" }}
+                />
+              </Box>
+            </Box>
+          )}
+        </Box>
       </Box>
     </Box>
   );

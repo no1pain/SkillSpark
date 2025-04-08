@@ -56,7 +56,6 @@ const CategoryTabs = () => {
           variant="scrollable"
           scrollButtons="auto"
           aria-label="category tabs"
-          centered
         >
           {categories.map((category) => (
             <StyledTab

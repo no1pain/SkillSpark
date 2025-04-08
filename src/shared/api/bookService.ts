@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5174/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 export interface BookData {
   title: string;
@@ -15,9 +15,14 @@ export interface BookData {
   difficulty: "Beginner" | "Intermediate" | "Advanced";
   fileUrl?: string;
   fileFormat?: "PDF" | "EPUB" | "MOBI";
+  imageUrl?: string;
 }
 
-const createBookFormData = (bookData: BookData, bookFile: File | null) => {
+const createBookFormData = (
+  bookData: BookData,
+  bookFile: File | null,
+  imageFile: File | null
+) => {
   const formData = new FormData();
 
   Object.entries(bookData).forEach(([key, value]) => {
@@ -34,30 +39,25 @@ const createBookFormData = (bookData: BookData, bookFile: File | null) => {
     );
   }
 
+  if (imageFile) {
+    formData.append("coverImage", imageFile);
+  }
+
   return formData;
 };
 
-export const addBook = async (bookData: BookData, bookFile: File | null) => {
+export const addBook = async (
+  bookData: BookData,
+  bookFile: File | null,
+  imageFile: File | null
+) => {
   try {
-    const formData = createBookFormData(bookData, bookFile);
-
-    // Log the book data being sent
-    console.log("=== Book Data Being Sent ===");
-    console.log("Original bookData:", bookData);
-    console.log("File being sent:", bookFile);
-
-    // Log FormData contents (need special handling since FormData can't be directly logged)
-    console.log("=== FormData Contents ===");
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
-    }
-
+    const formData = createBookFormData(bookData, bookFile, imageFile);
     const response = await axios.post(`${API_URL}/books`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-
     return response.data;
   } catch (error) {
     console.error("Error adding book:", error);
@@ -91,14 +91,12 @@ export const updateBook = async (
   bookFile: File | null
 ) => {
   try {
-    const formData = createBookFormData(bookData as BookData, bookFile);
-
+    const formData = createBookFormData(bookData as BookData, bookFile, null);
     const response = await axios.put(`${API_URL}/books/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-
     return response.data;
   } catch (error) {
     console.error(`Error updating book with ID ${id}:`, error);

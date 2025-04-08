@@ -21,6 +21,7 @@ interface CourseFormData {
   isPublic: boolean;
   bookContent?: File | null;
   author: string;
+  imageUrl: string | null;
 }
 
 interface CourseFormStepContentProps {
@@ -33,6 +34,7 @@ interface CourseFormStepContentProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPublicPrivateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFileChange?: (file: File | null) => void;
+  onImageChange?: (file: File | null) => void;
 }
 
 const CourseFormStepContent = ({
@@ -45,6 +47,7 @@ const CourseFormStepContent = ({
   onChange,
   onPublicPrivateChange,
   onFileChange,
+  onImageChange,
 }: CourseFormStepContentProps) => {
   const containerStyles = {
     maxWidth: "100%",
@@ -98,7 +101,9 @@ const CourseFormStepContent = ({
                   title={formData.title}
                   description={formData.description}
                   type={formData.type}
+                  imageUrl={formData.imageUrl}
                   onChange={onChange}
+                  onImageChange={onImageChange || (() => {})}
                 />
 
                 <PricingInfo

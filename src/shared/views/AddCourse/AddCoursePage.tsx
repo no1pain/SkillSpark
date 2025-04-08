@@ -49,12 +49,14 @@ const CourseCardPreview = ({
   level,
   price,
   type,
+  author,
 }: {
   title: string;
   category: string;
   level: string;
   price: number;
   type: string;
+  author: string;
 }) => {
   // Generate a gradient based on the course category
   const getGradientByCategory = (category: string): string => {
@@ -156,7 +158,7 @@ const CourseCardPreview = ({
               color="text.secondary"
               fontSize="0.8rem"
             >
-              Your Name
+              {author || "Your Name"}
             </Typography>
             <Chip
               label={level}
@@ -209,13 +211,15 @@ interface CourseFormData {
   description: string;
   category: string;
   subcategory: string;
-  type: CourseType;
+  type: "book" | "course";
   price: string;
   duration: string;
   level: "Beginner" | "Intermediate" | "Advanced";
   isPublic: boolean;
-  bookContent?: File | null;
+  bookContent: File | null;
+  coverImage: File | null;
   author: string;
+  imageUrl: string | null;
 }
 
 const steps = [
@@ -240,13 +244,15 @@ const AddCoursePage = () => {
     description: "",
     category: "",
     subcategory: "",
-    type: "book", // Default to book since we only handle books now
+    type: "book",
     price: "",
     duration: "",
     level: "Beginner",
     isPublic: true,
     bookContent: null,
-    author: "User", // Default author
+    coverImage: null,
+    author: "User",
+    imageUrl: null,
   });
 
   useEffect(() => {
@@ -341,7 +347,7 @@ const AddCoursePage = () => {
       isPublic: formData.isPublic,
     };
 
-    await addBook(bookData, formData.bookContent || null);
+    await addBook(bookData, formData.bookContent, formData.coverImage);
   };
 
   const validateForm = () => {
@@ -433,8 +439,12 @@ const AddCoursePage = () => {
     });
   };
 
-  const handleFileChange = (file: File | null) => {
-    setFormData((prev) => ({ ...prev, bookContent: file }));
+  const handleFileChange = (file: File | null, type: "book" | "cover") => {
+    if (type === "book") {
+      setFormData((prev) => ({ ...prev, bookContent: file }));
+    } else {
+      setFormData((prev) => ({ ...prev, coverImage: file }));
+    }
   };
 
   const handleAlertClose = () => {
@@ -522,6 +532,7 @@ const AddCoursePage = () => {
                     level={formData.level}
                     price={formData.price ? parseFloat(formData.price) : 49.99}
                     type="book"
+                    author={formData.author}
                   />
                 </Box>
                 <Typography
@@ -573,7 +584,7 @@ const AddCoursePage = () => {
                     onTypeSelect={handleTypeSelect}
                     onChange={handleChange}
                     onPublicPrivateChange={handlePublicPrivateChange}
-                    onFileChange={handleFileChange}
+                    onFileChange={(file) => handleFileChange(file, "book")}
                   />
                 </form>
               </Paper>
