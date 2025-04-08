@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { CourseType } from "./CourseTypeSelector";
 import CategorySelector from "./CategorySelector";
@@ -19,6 +19,7 @@ interface CourseFormData {
   duration: string;
   level: "Beginner" | "Intermediate" | "Advanced";
   isPublic: boolean;
+  bookContent?: File | null;
 }
 
 interface CourseFormStepContentProps {
@@ -30,6 +31,7 @@ interface CourseFormStepContentProps {
   onTypeSelect: (type: CourseType) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPublicPrivateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFileChange?: (file: File | null) => void;
 }
 
 const CourseFormStepContent = ({
@@ -41,6 +43,7 @@ const CourseFormStepContent = ({
   onTypeSelect,
   onChange,
   onPublicPrivateChange,
+  onFileChange,
 }: CourseFormStepContentProps) => {
   const containerStyles = {
     maxWidth: "100%",
@@ -102,6 +105,7 @@ const CourseFormStepContent = ({
                   duration={formData.duration}
                   type={formData.type}
                   onChange={onChange}
+                  onFileChange={onFileChange}
                 />
               </Box>
             </Box>

@@ -1,4 +1,4 @@
-import { Grid as MuiGrid, Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { CourseType } from "./CourseTypeSelector";
 import { COLORS } from "@/shared/constants/colors";
 import NumberedBadge from "./NumberedBadge";
@@ -10,8 +10,6 @@ interface CourseBasicInfoProps {
   type: CourseType;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-const Grid = MuiGrid as any;
 
 const CourseBasicInfo = ({
   title,
