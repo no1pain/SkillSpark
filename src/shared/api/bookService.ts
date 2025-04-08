@@ -41,6 +41,17 @@ export const addBook = async (bookData: BookData, bookFile: File | null) => {
   try {
     const formData = createBookFormData(bookData, bookFile);
 
+    // Log the book data being sent
+    console.log("=== Book Data Being Sent ===");
+    console.log("Original bookData:", bookData);
+    console.log("File being sent:", bookFile);
+
+    // Log FormData contents (need special handling since FormData can't be directly logged)
+    console.log("=== FormData Contents ===");
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
+
     const response = await axios.post(`${API_URL}/books`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",

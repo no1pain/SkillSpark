@@ -328,7 +328,6 @@ const AddCoursePage = () => {
   };
 
   const submitBook = async () => {
-    // Prepare book data according to API specifications
     const bookData: BookData = {
       title: formData.title,
       description: formData.description,
