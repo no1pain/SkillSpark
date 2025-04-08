@@ -1,14 +1,8 @@
-import {
-  Grid as MuiGrid,
-  TextField,
-  Box,
-  styled,
-  alpha,
-  Typography,
-} from "@mui/material";
+import { Grid as MuiGrid, Box, Typography } from "@mui/material";
 import { CourseType } from "./CourseTypeSelector";
 import { COLORS } from "@/shared/constants/colors";
 import NumberedBadge from "./NumberedBadge";
+import ModernTextField from "./ModernTextField";
 
 interface CourseBasicInfoProps {
   title: string;
@@ -16,55 +10,6 @@ interface CourseBasicInfoProps {
   type: CourseType;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-const ModernTextField = styled(TextField)(({ theme }) => ({
-  "& .MuiInputBase-root": {
-    borderRadius: 12,
-    backgroundColor: "transparent",
-    border: "none",
-    padding: "0",
-    "&.Mui-focused": {
-      boxShadow: "none",
-    },
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "transparent",
-    borderBottomColor: COLORS.primary,
-    borderWidth: "0 0 2px 0",
-    borderRadius: 0,
-  },
-  "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "transparent",
-    borderBottomColor: COLORS.primary,
-    borderWidth: "0 0 2px 0",
-  },
-  "& .MuiInputBase-input": {
-    padding: "12px 4px",
-    fontSize: "16px",
-    "&::placeholder": {
-      color: alpha(theme.palette.text.primary, 0.5),
-      opacity: 0.7,
-    },
-  },
-  "& .MuiFormLabel-root": {
-    color: alpha(theme.palette.text.primary, 0.6),
-    fontWeight: 500,
-    fontSize: "14px",
-    transform: "translate(4px, 12px) scale(1)",
-    "&.Mui-focused": {
-      color: COLORS.primary,
-    },
-    "&.MuiFormLabel-filled": {
-      transform: "translate(4px, -9px) scale(0.75)",
-    },
-  },
-  "& .MuiFormLabel-root.Mui-focused": {
-    transform: "translate(4px, -9px) scale(0.75)",
-  },
-  "& .MuiInputAdornment-root": {
-    marginRight: 8,
-  },
-}));
 
 const Grid = MuiGrid as any;
 
@@ -98,35 +43,31 @@ const CourseBasicInfo = ({
         <NumberedBadge number={4} />
         Basic Information
       </Typography>
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <ModernTextField
-            name="title"
-            label="Title *"
-            value={title}
-            onChange={onChange}
-            fullWidth
-            required
-            variant="outlined"
-            placeholder={`Enter ${type} title`}
-          />
-        </Grid>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <ModernTextField
+          name="title"
+          label="Title *"
+          value={title}
+          onChange={onChange}
+          fullWidth
+          required
+          variant="outlined"
+          placeholder={`Enter ${type} title`}
+        />
 
-        <Grid item xs={12}>
-          <ModernTextField
-            name="description"
-            label="Description *"
-            value={description}
-            onChange={onChange}
-            fullWidth
-            required
-            multiline
-            rows={4}
-            variant="outlined"
-            placeholder={`Provide a detailed description of your ${type}...`}
-          />
-        </Grid>
-      </Grid>
+        <ModernTextField
+          name="description"
+          label="Description *"
+          value={description}
+          onChange={onChange}
+          fullWidth
+          required
+          multiline
+          rows={4}
+          variant="outlined"
+          placeholder={`Provide a detailed description of your ${type}...`}
+        />
+      </Box>
     </Box>
   );
 };

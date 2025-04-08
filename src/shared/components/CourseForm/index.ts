@@ -14,3 +14,4 @@ export { default as NavButtons } from "./NavButtons";
 export { default as StyledStepper } from "./StyledStepper";
 export { default as CancelButton } from "./CancelButton";
 export { default as NumberedBadge } from "./NumberedBadge";
+export { default as ModernTextField } from "./ModernTextField";
