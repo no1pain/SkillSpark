@@ -2,11 +2,13 @@ import {
   Box,
   Container,
   Typography,
-  Paper,
   styled,
   Card,
   CardContent,
   Chip,
+  Snackbar,
+  Alert,
+  Paper,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import Header from "@/components/Header/Header";
@@ -22,8 +24,8 @@ import {
   CourseType,
   CourseFormStepContent,
 } from "@/shared/components/CourseForm";
-import CancelButton from "@/shared/components/CourseForm/CancelButton";
 import { COLORS } from "@/shared/constants/colors";
+import { addBook, BookData } from "@/shared/api/bookService";
 
 const PageWrapper = styled("div")({
   width: "100%",
@@ -212,6 +214,8 @@ interface CourseFormData {
   duration: string;
   level: "Beginner" | "Intermediate" | "Advanced";
   isPublic: boolean;
+  bookContent?: File | null;
+  author: string;
 }
 
 const steps = [
@@ -225,16 +229,24 @@ const AddCoursePage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [topCategories] = useState<TopCategory[]>(getTopCategories());
   const [subcategories, setSubcategories] = useState<SubCategory[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [alertState, setAlertState] = useState({
+    open: false,
+    message: "",
+    severity: "success" as "success" | "error",
+  });
   const [formData, setFormData] = useState<CourseFormData>({
     title: "",
     description: "",
     category: "",
     subcategory: "",
-    type: "course",
+    type: "book", // Default to book since we only handle books now
     price: "",
     duration: "",
     level: "Beginner",
     isPublic: true,
+    bookContent: null,
+    author: "User", // Default author
   });
 
   useEffect(() => {
@@ -262,6 +274,18 @@ const AddCoursePage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (formData.category) {
+      const subs = getSubCategories(formData.category);
+      setSubcategories(subs);
+      if (!subs.some((sub) => sub.name === formData.subcategory)) {
+        setFormData((prev) => ({ ...prev, subcategory: "" }));
+      }
+    } else {
+      setSubcategories([]);
+    }
+  }, [formData.category]);
+
   const handleNext = () => {
     setActiveStep((prevStep) => prevStep + 1);
     window.scrollTo(0, 0);
@@ -270,6 +294,117 @@ const AddCoursePage = () => {
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
     window.scrollTo(0, 0);
+  };
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await submitBook();
+      setAlertState({
+        open: true,
+        message: "Your book has been successfully published!",
+        severity: "success",
+      });
+      // Redirect to overview after a short delay
+      setTimeout(() => {
+        navigate("/overview");
+      }, 2000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setAlertState({
+        open: true,
+        message: "Failed to publish your book. Please try again.",
+        severity: "error",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const submitBook = async () => {
+    // Prepare book data according to API specifications
+    const bookData: BookData = {
+      title: formData.title,
+      description: formData.description,
+      category: formData.category,
+      subcategory: formData.subcategory || undefined,
+      contentType: "Book",
+      price: parseFloat(formData.price),
+      pages: parseInt(formData.duration, 10),
+      author: formData.author,
+      difficulty: formData.level,
+      isPublic: formData.isPublic,
+    };
+
+    await addBook(bookData, formData.bookContent || null);
+  };
+
+  const validateForm = () => {
+    // Check required fields based on API requirements
+    if (!formData.title || !formData.description || !formData.category) {
+      setAlertState({
+        open: true,
+        message: "Please fill in all required fields",
+        severity: "error",
+      });
+      return false;
+    }
+
+    // Price must be a valid number
+    if (isNaN(parseFloat(formData.price)) || parseFloat(formData.price) < 0) {
+      setAlertState({
+        open: true,
+        message: "Please enter a valid price",
+        severity: "error",
+      });
+      return false;
+    }
+
+    // Pages must be a valid number
+    if (
+      isNaN(parseInt(formData.duration, 10)) ||
+      parseInt(formData.duration, 10) <= 0
+    ) {
+      setAlertState({
+        open: true,
+        message: "Please enter a valid page count",
+        severity: "error",
+      });
+      return false;
+    }
+
+    // Author is required
+    if (!formData.author) {
+      setAlertState({
+        open: true,
+        message: "Please enter an author name",
+        severity: "error",
+      });
+      return false;
+    }
+
+    // File is required for books
+    if (!formData.bookContent) {
+      setAlertState({
+        open: true,
+        message: "Please upload your book content",
+        severity: "error",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -290,14 +425,6 @@ const AddCoursePage = () => {
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
   const handlePublicPrivateChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -307,19 +434,16 @@ const AddCoursePage = () => {
     });
   };
 
-  const handleSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    console.log("Course data to submit:", formData);
-    navigate("/overview");
+  const handleFileChange = (file: File | null) => {
+    setFormData((prev) => ({ ...prev, bookContent: file }));
   };
 
-  const handleCancel = () => {
-    navigate("/overview");
+  const handleAlertClose = () => {
+    setAlertState((prev) => ({ ...prev, open: false }));
   };
 
   const isLastStep = activeStep === steps.length - 1;
 
-  // Get the category name from the category ID
   const categoryName = formData.category
     ? topCategories.find((cat) => cat.id === formData.category)?.name ||
       "Category"
@@ -347,7 +471,7 @@ const AddCoursePage = () => {
             mb={4}
             mt={2}
           >
-            Create New {formData.type === "course" ? "Course" : "Book"}
+            Create New Book
           </Typography>
 
           <CourseFormStepper
@@ -390,7 +514,7 @@ const AddCoursePage = () => {
                   mb={2}
                   color={COLORS.text.secondary}
                 >
-                  Card Preview
+                  Book Preview
                 </Typography>
                 <Box sx={{ width: "100%", mx: "auto" }}>
                   <CourseCardPreview
@@ -398,7 +522,7 @@ const AddCoursePage = () => {
                     category={categoryName}
                     level={formData.level}
                     price={formData.price ? parseFloat(formData.price) : 49.99}
-                    type={formData.type}
+                    type="book"
                   />
                 </Box>
                 <Typography
@@ -408,9 +532,7 @@ const AddCoursePage = () => {
                   mt={2}
                   color={COLORS.text.tertiary}
                 >
-                  This is how your{" "}
-                  {formData.type === "course" ? "course" : "book"} will appear
-                  to learners
+                  This is how your book will appear to learners
                 </Typography>
               </Box>
             </Box>
@@ -439,7 +561,7 @@ const AddCoursePage = () => {
                   style={{ width: "100%" }}
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (isLastStep) handleSubmit();
+                    if (isLastStep) handleSubmit(e);
                     else handleNext();
                   }}
                 >
@@ -452,17 +574,29 @@ const AddCoursePage = () => {
                     onTypeSelect={handleTypeSelect}
                     onChange={handleChange}
                     onPublicPrivateChange={handlePublicPrivateChange}
+                    onFileChange={handleFileChange}
                   />
                 </form>
               </Paper>
             </Box>
           </Box>
-
-          <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
-            <CancelButton onClick={handleCancel} />
-          </Box>
         </Container>
       </FormContainer>
+
+      <Snackbar
+        open={alertState.open}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity={alertState.severity}
+          sx={{ width: "100%" }}
+        >
+          {alertState.message}
+        </Alert>
+      </Snackbar>
     </PageWrapper>
   );
 };

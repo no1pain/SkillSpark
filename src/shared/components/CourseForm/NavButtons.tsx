@@ -84,6 +84,7 @@ const NavButtons = ({
           onClick={onNext}
           sx={{
             position: "absolute",
+            right: { xs: "0", sm: "10" },
             top: "50%",
             transform: "translateY(-50%)",
             bgcolor: COLORS.primary,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import { CourseType } from "./CourseTypeSelector";
 import CategorySelector from "./CategorySelector";
@@ -20,6 +20,7 @@ interface CourseFormData {
   level: "Beginner" | "Intermediate" | "Advanced";
   isPublic: boolean;
   bookContent?: File | null;
+  author: string;
 }
 
 interface CourseFormStepContentProps {
@@ -114,7 +115,11 @@ const CourseFormStepContent = ({
       case 2:
         return (
           <Box sx={containerStyles}>
-            <AdditionalInfo level={formData.level} onChange={onChange} />
+            <AdditionalInfo
+              level={formData.level}
+              author={formData.author}
+              onChange={onChange}
+            />
           </Box>
         );
       default:

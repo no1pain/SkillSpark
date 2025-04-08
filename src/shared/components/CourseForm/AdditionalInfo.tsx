@@ -1,16 +1,15 @@
-import { Box, Grid as MuiGrid, MenuItem, Typography } from "@mui/material";
+import { Box, MenuItem, Typography } from "@mui/material";
 import { COLORS } from "@/shared/constants/colors";
 import NumberedBadge from "./NumberedBadge";
 import ModernTextField from "./ModernTextField";
 
 interface AdditionalInfoProps {
   level: "Beginner" | "Intermediate" | "Advanced";
+  author: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Grid = MuiGrid as any;
-
-const AdditionalInfo = ({ level, onChange }: AdditionalInfoProps) => {
+const AdditionalInfo = ({ level, author, onChange }: AdditionalInfoProps) => {
   return (
     <Box
       sx={{
@@ -35,24 +34,33 @@ const AdditionalInfo = ({ level, onChange }: AdditionalInfoProps) => {
         <NumberedBadge number={6} />
         Additional Information
       </Typography>
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <ModernTextField
-            name="level"
-            select
-            label="Difficulty Level *"
-            value={level}
-            onChange={onChange}
-            fullWidth
-            required
-            variant="outlined"
-          >
-            <MenuItem value="Beginner">Beginner</MenuItem>
-            <MenuItem value="Intermediate">Intermediate</MenuItem>
-            <MenuItem value="Advanced">Advanced</MenuItem>
-          </ModernTextField>
-        </Grid>
-      </Grid>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <ModernTextField
+          name="author"
+          label="Author *"
+          value={author}
+          onChange={onChange}
+          fullWidth
+          required
+          variant="outlined"
+          placeholder="Enter author name"
+        />
+
+        <ModernTextField
+          name="level"
+          select
+          label="Difficulty Level *"
+          value={level}
+          onChange={onChange}
+          fullWidth
+          required
+          variant="outlined"
+        >
+          <MenuItem value="Beginner">Beginner</MenuItem>
+          <MenuItem value="Intermediate">Intermediate</MenuItem>
+          <MenuItem value="Advanced">Advanced</MenuItem>
+        </ModernTextField>
+      </Box>
     </Box>
   );
 };
