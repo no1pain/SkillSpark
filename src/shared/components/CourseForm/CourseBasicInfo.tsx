@@ -1,6 +1,14 @@
-import { Grid as MuiGrid, TextField, Box, styled, alpha } from "@mui/material";
+import {
+  Grid as MuiGrid,
+  TextField,
+  Box,
+  styled,
+  alpha,
+  Typography,
+} from "@mui/material";
 import { CourseType } from "./CourseTypeSelector";
 import { COLORS } from "@/shared/constants/colors";
+import NumberedBadge from "./NumberedBadge";
 
 interface CourseBasicInfoProps {
   title: string;
@@ -75,6 +83,21 @@ const CourseBasicInfo = ({
         boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
       }}
     >
+      <Typography
+        variant="h6"
+        component="div"
+        sx={{
+          fontSize: "1.1rem",
+          fontWeight: 600,
+          color: COLORS.text.primary,
+          mb: 3,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <NumberedBadge number={4} />
+        Basic Information
+      </Typography>
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <ModernTextField

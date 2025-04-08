@@ -13,3 +13,4 @@ export { default as VisibilitySelector } from "./VisibilitySelector";
 export { default as NavButtons } from "./NavButtons";
 export { default as StyledStepper } from "./StyledStepper";
 export { default as CancelButton } from "./CancelButton";
+export { default as NumberedBadge } from "./NumberedBadge";

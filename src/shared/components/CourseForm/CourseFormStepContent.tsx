@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { CourseType } from "./CourseTypeSelector";
 import CategorySelector from "./CategorySelector";
 import VisibilitySelector from "./VisibilitySelector";
@@ -81,44 +81,6 @@ const CourseFormStepContent = ({
         return (
           <Box sx={containerStyles}>
             <Box mb={4}>
-              <Typography
-                variant="h6"
-                component="div"
-                align="center"
-                mb={4}
-                sx={{
-                  fontSize: "1.4rem",
-                  fontWeight: 600,
-                  color: (theme) => theme.palette.text.primary,
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{ display: "inline-flex", alignItems: "center" }}
-                >
-                  <Box
-                    component="span"
-                    sx={{
-                      width: 42,
-                      height: 42,
-                      borderRadius: "10px",
-                      backgroundColor: "#6200ee",
-                      color: "white",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      mr: 2,
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      boxShadow: `0 8px 16px rgba(98, 0, 238, 0.25)`,
-                    }}
-                  >
-                    4
-                  </Box>
-                  Basic Information
-                </Box>
-              </Typography>
-
               <Box
                 sx={{
                   backgroundColor: "rgba(245, 245, 245, 0.5)",
