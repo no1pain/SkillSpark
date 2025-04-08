@@ -334,17 +334,22 @@ const AddCoursePage = () => {
   };
 
   const submitBook = async () => {
+    const categoryName =
+      topCategories.find((cat) => cat.id === formData.category)?.name || "";
+
     const bookData: BookData = {
       title: formData.title,
       description: formData.description,
-      category: formData.category,
+      category: categoryName,
       subcategory: formData.subcategory || undefined,
+      isPublic: formData.isPublic,
       contentType: "Book",
-      price: parseFloat(formData.price),
-      pages: parseInt(formData.duration, 10),
+      price: parseFloat(formData.price) || 0,
+      pages: parseInt(formData.duration, 10) || 0,
       author: formData.author,
       difficulty: formData.level,
-      isPublic: formData.isPublic,
+      fileFormat: "PDF",
+      imageUrl: "",
     };
 
     await addBook(bookData, formData.bookContent, formData.coverImage);

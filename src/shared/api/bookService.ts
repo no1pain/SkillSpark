@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5174/api";
 
 export interface BookData {
   title: string;
@@ -22,25 +22,25 @@ const createBookFormData = (
   bookData: BookData,
   bookFile: File | null,
   imageFile: File | null
-) => {
-  const formData = new FormData();
-
-  Object.entries(bookData).forEach(([key, value]) => {
-    if (value !== undefined) {
-      formData.append(key, String(value));
-    }
+): FormData => {
+  console.log("Creating form data with:", {
+    bookData,
+    hasBookFile: !!bookFile,
+    hasImageFile: !!imageFile,
   });
 
+  const formData = new FormData();
+
+  formData.append("bookData", JSON.stringify(bookData));
+
   if (bookFile) {
-    formData.append("bookContent", bookFile);
-    formData.append(
-      "fileFormat",
-      bookFile.name.split(".").pop()?.toUpperCase() || "PDF"
-    );
+    console.log("Adding PDF file:", bookFile.name, bookFile.type);
+    formData.append("pdf", bookFile);
   }
 
   if (imageFile) {
-    formData.append("coverImage", imageFile);
+    console.log("Adding image file:", imageFile.name, imageFile.type);
+    formData.append("image", imageFile);
   }
 
   return formData;
@@ -53,6 +53,12 @@ export const addBook = async (
 ) => {
   try {
     const formData = createBookFormData(bookData, bookFile, imageFile);
+
+    console.log("Form data entries:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
+
     const response = await axios.post(`${API_URL}/books`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -60,6 +66,9 @@ export const addBook = async (
     });
     return response.data;
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      console.error("Server response error:", error.response.data);
+    }
     console.error("Error adding book:", error);
     throw error;
   }
