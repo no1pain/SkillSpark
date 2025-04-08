@@ -3,6 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { COLORS } from "@/shared/constants/colors";
 
 interface FormActionsProps {
   activeStep: number;
@@ -65,8 +66,8 @@ const FormActions = ({
             variant="contained"
             onClick={(e) => onNext(e)}
             sx={{
-              bgcolor: "#6200ee",
-              "&:hover": { bgcolor: "#5000d1" },
+              bgcolor: COLORS.primary,
+              "&:hover": { bgcolor: COLORS.primaryDark },
             }}
             endIcon={isLastStep ? <CheckIcon /> : <ArrowForwardIcon />}
           >

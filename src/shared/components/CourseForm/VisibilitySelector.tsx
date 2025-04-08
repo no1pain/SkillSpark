@@ -1,6 +1,7 @@
 import { Box, Typography, Fade } from "@mui/material";
 import PublicIcon from "@mui/icons-material/Public";
 import LockIcon from "@mui/icons-material/Lock";
+import { COLORS } from "@/shared/constants/colors";
 
 interface VisibilitySelectorProps {
   isPublic: boolean;
@@ -32,15 +33,15 @@ const VisibilitySelector = ({
               width: 32,
               height: 32,
               borderRadius: "50%",
-              backgroundColor: "#6200ee",
-              color: "white",
+              backgroundColor: COLORS.primary,
+              color: COLORS.card.title,
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
               mr: 1.5,
               fontSize: 15,
               fontWeight: "bold",
-              boxShadow: "0 4px 8px rgba(98, 0, 238, 0.25)",
+              boxShadow: `0 4px 8px rgba(98, 0, 238, 0.25)`,
             }}
           >
             2
@@ -76,7 +77,7 @@ const VisibilitySelector = ({
               height: 56,
               backgroundColor: "rgba(246, 246, 246, 0.8)",
               backdropFilter: "blur(8px)",
-              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.05)",
+              boxShadow: `0 4px 10px ${COLORS.card.shadow}`,
               transition: "all 0.2s ease",
             }}
           >
@@ -96,7 +97,7 @@ const VisibilitySelector = ({
                 cursor: "pointer",
                 transition: "all 0.15s ease",
                 fontWeight: !isPublic ? 600 : 400,
-                color: !isPublic ? "white" : "#666",
+                color: !isPublic ? COLORS.card.title : COLORS.text.secondary,
                 zIndex: 1,
                 "&:active": {
                   transform: "scale(0.98)",
@@ -113,7 +114,7 @@ const VisibilitySelector = ({
                       right: 3,
                       bottom: 3,
                       borderRadius: 12,
-                      backgroundColor: "#6200ee",
+                      backgroundColor: COLORS.primary,
                       zIndex: -1,
                     }}
                   />
@@ -140,7 +141,7 @@ const VisibilitySelector = ({
                 cursor: "pointer",
                 transition: "all 0.15s ease",
                 fontWeight: isPublic ? 600 : 400,
-                color: isPublic ? "white" : "#666",
+                color: isPublic ? COLORS.card.title : COLORS.text.secondary,
                 zIndex: 1,
                 "&:active": {
                   transform: "scale(0.98)",
@@ -157,7 +158,7 @@ const VisibilitySelector = ({
                       right: 3,
                       bottom: 3,
                       borderRadius: 12,
-                      backgroundColor: "#6200ee",
+                      backgroundColor: COLORS.primary,
                       zIndex: -1,
                     }}
                   />

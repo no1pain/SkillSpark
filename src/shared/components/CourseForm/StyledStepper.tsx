@@ -1,20 +1,21 @@
 import { Stepper, styled } from "@mui/material";
+import { COLORS } from "@/shared/constants/colors";
 
 const StyledStepper = styled(Stepper)(() => ({
   marginBottom: "40px",
   "& .MuiStepLabel-label": {
     fontSize: "15px",
     fontWeight: 400,
-    color: "#666",
+    color: COLORS.text.secondary,
     transition: "all 0.2s ease",
   },
   "& .MuiStepLabel-label.Mui-active": {
     fontWeight: 600,
-    color: "#6200ee",
+    color: COLORS.primary,
     fontSize: "16px",
   },
   "& .MuiStepLabel-label.Mui-completed": {
-    color: "#6200ee",
+    color: COLORS.primary,
     opacity: 0.8,
   },
   "& .MuiStepIcon-root": {
@@ -24,12 +25,12 @@ const StyledStepper = styled(Stepper)(() => ({
     transition: "all 0.3s ease",
   },
   "& .MuiStepIcon-root.Mui-active": {
-    color: "#6200ee",
-    filter: "drop-shadow(0 2px 5px rgba(98, 0, 238, 0.3))",
+    color: COLORS.primary,
+    filter: `drop-shadow(0 2px 5px rgba(98, 0, 238, 0.3))`,
     transform: "scale(1.1)",
   },
   "& .MuiStepIcon-root.Mui-completed": {
-    color: "#6200ee",
+    color: COLORS.primary,
   },
   "& .MuiStepConnector-line": {
     borderColor: "#e0e0e0",
@@ -37,10 +38,10 @@ const StyledStepper = styled(Stepper)(() => ({
     transition: "all 0.3s ease",
   },
   "& .MuiStepConnector-root.Mui-active .MuiStepConnector-line": {
-    borderColor: "#6200ee",
+    borderColor: COLORS.primary,
   },
   "& .MuiStepConnector-root.Mui-completed .MuiStepConnector-line": {
-    borderColor: "#6200ee",
+    borderColor: COLORS.primary,
   },
 }));
 

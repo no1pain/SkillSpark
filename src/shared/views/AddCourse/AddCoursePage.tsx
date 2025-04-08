@@ -23,6 +23,7 @@ import {
   CourseFormStepContent,
 } from "@/shared/components/CourseForm";
 import CancelButton from "@/shared/components/CourseForm/CancelButton";
+import { COLORS } from "@/shared/constants/colors";
 
 const PageWrapper = styled("div")({
   width: "100%",
@@ -57,17 +58,17 @@ const CourseCardPreview = ({
   const getGradientByCategory = (category: string): string => {
     switch (category) {
       case "Technology":
-        return "linear-gradient(135deg, #E23838 0%, #FF9933 100%)";
+        return COLORS.gradients.technology;
       case "Creative Arts":
-        return "linear-gradient(135deg, #FF416C 0%, #FFA500 100%)";
+        return COLORS.gradients.creativeArts;
       case "Business":
-        return "linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%)";
+        return COLORS.gradients.business;
       case "Personal Development":
-        return "linear-gradient(135deg, #00B4DB 0%, #0083B0 100%)";
+        return COLORS.gradients.personalDev;
       case "Finance":
-        return "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)";
+        return COLORS.gradients.finance;
       default:
-        return "linear-gradient(135deg, #6200ee 0%, #9c40ff 100%)"; // Violet gradient as default
+        return COLORS.gradients.default;
     }
   };
 
@@ -79,7 +80,7 @@ const CourseCardPreview = ({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+        boxShadow: `0 4px 10px ${COLORS.card.shadow}`,
       }}
     >
       <Box
@@ -100,7 +101,7 @@ const CourseCardPreview = ({
         >
           <Typography
             variant="h4"
-            color="white"
+            color={COLORS.card.title}
             fontWeight="bold"
             align="center"
           >
@@ -114,8 +115,8 @@ const CourseCardPreview = ({
             position: "absolute",
             top: 8,
             right: 8,
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            color: "white",
+            backgroundColor: COLORS.chip.background,
+            color: COLORS.chip.text,
             borderRadius: "4px",
             fontSize: "0.7rem",
           }}
@@ -138,7 +139,7 @@ const CourseCardPreview = ({
             gutterBottom
             sx={{ fontSize: "1rem" }}
           >
-            {title || "Your Course Title"}
+            {title || `Your ${type === "course" ? "Course" : "Book"} Title`}
           </Typography>
           <Box
             sx={{
@@ -163,11 +164,16 @@ const CourseCardPreview = ({
                 fontSize: "0.6rem",
                 backgroundColor:
                   level === "Beginner"
-                    ? "rgba(98, 0, 238, 0.1)"
+                    ? COLORS.level.beginner.bg
                     : level === "Intermediate"
-                    ? "rgba(98, 0, 238, 0.2)"
-                    : "rgba(98, 0, 238, 0.3)",
-                color: "#6200ee",
+                    ? COLORS.level.intermediate.bg
+                    : COLORS.level.advanced.bg,
+                color:
+                  level === "Beginner"
+                    ? COLORS.level.beginner.text
+                    : level === "Intermediate"
+                    ? COLORS.level.intermediate.text
+                    : COLORS.level.advanced.text,
               }}
             />
           </Box>
@@ -179,7 +185,11 @@ const CourseCardPreview = ({
               mt: 2.5,
             }}
           >
-            <Typography variant="body1" fontWeight="bold" color="#6200ee">
+            <Typography
+              variant="body1"
+              fontWeight="bold"
+              color={COLORS.primary}
+            >
               ${price.toFixed(2)}
             </Typography>
             <Typography variant="caption" color="text.secondary">
@@ -333,7 +343,7 @@ const AddCoursePage = () => {
             component="h1"
             align="center"
             fontWeight="bold"
-            color="#333"
+            color={COLORS.text.primary}
             mb={4}
             mt={2}
           >
@@ -368,9 +378,9 @@ const AddCoursePage = () => {
                   position: "sticky",
                   top: 20,
                   p: 2,
-                  backgroundColor: "rgba(245, 245, 245, 0.7)",
+                  backgroundColor: COLORS.background.light,
                   borderRadius: 2,
-                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
+                  boxShadow: `0 4px 20px ${COLORS.paper.shadow}`,
                 }}
               >
                 <Typography
@@ -378,9 +388,9 @@ const AddCoursePage = () => {
                   component="div"
                   align="center"
                   mb={2}
-                  color="#666"
+                  color={COLORS.text.secondary}
                 >
-                  Course Preview
+                  Card Preview
                 </Typography>
                 <Box sx={{ width: "100%", mx: "auto" }}>
                   <CourseCardPreview
@@ -396,9 +406,11 @@ const AddCoursePage = () => {
                   component="div"
                   align="center"
                   mt={2}
-                  color="#888"
+                  color={COLORS.text.tertiary}
                 >
-                  This is how your course will appear to learners
+                  This is how your{" "}
+                  {formData.type === "course" ? "course" : "book"} will appear
+                  to learners
                 </Typography>
               </Box>
             </Box>
@@ -414,9 +426,9 @@ const AddCoursePage = () => {
                 elevation={3}
                 sx={{
                   p: { xs: 2, md: 3 },
-                  bgcolor: "#fff",
+                  bgcolor: COLORS.background.main,
                   borderRadius: 2,
-                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                  boxShadow: `0 4px 20px ${COLORS.paper.shadow}`,
                   mb: 3,
                   width: "100%",
                   display: "flex",

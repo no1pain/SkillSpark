@@ -1,32 +1,32 @@
 [
   {
     "id": "technology",
-    "name": "TECHNOLOGY",
+    "name": "Technology",
     "displayOrder": 1
   },
   {
     "id": "creative-arts",
-    "name": "CREATIVE ARTS",
+    "name": "Creative Arts",
     "displayOrder": 2
   },
   {
     "id": "business",
-    "name": "BUSINESS",
+    "name": "Business",
     "displayOrder": 3
   },
   {
     "id": "personal-development",
-    "name": "PERSONAL DEVELOPMENT",
+    "name": "Personal Development",
     "displayOrder": 4
   },
   {
     "id": "health",
-    "name": "HEALTH & FITNESS",
+    "name": "Health & Fitness",
     "displayOrder": 5
   },
   {
     "id": "languages",
-    "name": "LANGUAGES",
+    "name": "Languages",
     "displayOrder": 6
   }
 ]

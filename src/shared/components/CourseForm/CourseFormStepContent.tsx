@@ -63,6 +63,7 @@ const CourseFormStepContent = ({
               selectedSubcategory={formData.subcategory}
               onCategoryChange={onCategoryChange}
               onSubcategoryChange={onChange}
+              contentType={formData.type}
             />
 
             <VisibilitySelector
@@ -80,7 +81,17 @@ const CourseFormStepContent = ({
         return (
           <Box sx={containerStyles}>
             <Box mb={4}>
-              <Typography variant="h6" component="div" align="center" mb={2}>
+              <Typography
+                variant="h6"
+                component="div"
+                align="center"
+                mb={4}
+                sx={{
+                  fontSize: "1.4rem",
+                  fontWeight: 600,
+                  color: (theme) => theme.palette.text.primary,
+                }}
+              >
                 <Box
                   component="span"
                   sx={{ display: "inline-flex", alignItems: "center" }}
@@ -88,17 +99,18 @@ const CourseFormStepContent = ({
                   <Box
                     component="span"
                     sx={{
-                      width: 28,
-                      height: 28,
-                      borderRadius: "50%",
+                      width: 42,
+                      height: 42,
+                      borderRadius: "10px",
                       backgroundColor: "#6200ee",
                       color: "white",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      mr: 1.5,
-                      fontSize: 14,
+                      mr: 2,
+                      fontSize: 18,
                       fontWeight: "bold",
+                      boxShadow: `0 8px 16px rgba(98, 0, 238, 0.25)`,
                     }}
                   >
                     4
@@ -107,20 +119,30 @@ const CourseFormStepContent = ({
                 </Box>
               </Typography>
 
-              <CourseBasicInfo
-                title={formData.title}
-                description={formData.description}
-                type={formData.type}
-                onChange={onChange}
-              />
-            </Box>
+              <Box
+                sx={{
+                  backgroundColor: "rgba(245, 245, 245, 0.5)",
+                  borderRadius: "20px",
+                  p: 2,
+                  pt: 3,
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.03)",
+                }}
+              >
+                <CourseBasicInfo
+                  title={formData.title}
+                  description={formData.description}
+                  type={formData.type}
+                  onChange={onChange}
+                />
 
-            <PricingInfo
-              price={formData.price}
-              duration={formData.duration}
-              type={formData.type}
-              onChange={onChange}
-            />
+                <PricingInfo
+                  price={formData.price}
+                  duration={formData.duration}
+                  type={formData.type}
+                  onChange={onChange}
+                />
+              </Box>
+            </Box>
           </Box>
         );
       case 2:

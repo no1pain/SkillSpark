@@ -3,12 +3,13 @@ import {
   MenuItem,
   TextField,
   Typography,
-  InputAdornment,
   styled,
+  alpha,
 } from "@mui/material";
 import { SubCategory, TopCategory } from "@/shared/utils/categoryUtils";
-import CategoryIcon from "@mui/icons-material/Category";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { COLORS } from "@/shared/constants/colors";
+import { CourseType } from "./CourseTypeSelector";
 
 interface CategorySelectorProps {
   topCategories: TopCategory[];
@@ -17,6 +18,7 @@ interface CategorySelectorProps {
   selectedSubcategory: string;
   onCategoryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubcategoryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  contentType: CourseType;
 }
 
 const ModernTextField = styled(TextField)(() => ({
@@ -27,31 +29,123 @@ const ModernTextField = styled(TextField)(() => ({
     backdropFilter: "blur(8px)",
     "&:hover": {
       backgroundColor: "rgba(248, 248, 248, 0.95)",
-      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.07)",
+      boxShadow: `0 4px 10px ${COLORS.card.shadow}`,
     },
     "&.Mui-focused": {
-      boxShadow: "0 4px 14px rgba(98, 0, 238, 0.1)",
-      backgroundColor: "rgba(255, 255, 255, 1)",
+      backgroundColor: "rgba(246, 246, 246, 0.8)",
+      boxShadow: "none",
     },
   },
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: "rgba(0, 0, 0, 0.1)",
   },
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderWidth: "1px",
+  },
   "& .MuiSelect-icon": {
-    color: "#6200ee",
+    color: COLORS.primary,
+    fontSize: "1.4rem",
+    right: "12px",
+    transition: "transform 0.2s ease",
+  },
+  "& .MuiSelect-iconOpen": {
+    transform: "rotate(180deg)",
   },
   "& .MuiInputLabel-root": {
     fontWeight: 500,
     fontSize: "0.9rem",
   },
   "& .MuiInputLabel-root.Mui-focused": {
-    color: "#6200ee",
+    color: COLORS.text.secondary,
   },
-  "& .MuiMenuItem-root.Mui-selected": {
-    backgroundColor: "rgba(98, 0, 238, 0.1)",
-    color: "#6200ee",
+  "& .MuiSelect-select": {
+    display: "flex",
+    alignItems: "center",
+    padding: "12px 16px",
   },
 }));
+
+const StyledMenuItem = styled(MenuItem)(() => ({
+  display: "flex",
+  alignItems: "center",
+  padding: "12px 16px",
+  margin: "2px",
+  borderRadius: "12px",
+  transition: "all 0.2s ease",
+  fontWeight: 500,
+  position: "relative",
+  "&:before": {
+    content: '""',
+    position: "absolute",
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 0,
+    backgroundColor: COLORS.primary,
+    transition: "all 0.2s ease",
+    opacity: 0,
+    borderRadius: "4px",
+  },
+  "&.Mui-selected": {
+    backgroundColor: alpha(COLORS.primary, 0.08),
+    color: COLORS.primary,
+    fontWeight: 600,
+    "&:before": {
+      width: 4,
+      opacity: 1,
+    },
+    "&:hover": {
+      backgroundColor: alpha(COLORS.primary, 0.12),
+    },
+  },
+  "&:hover": {
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+  },
+}));
+
+const CategorySelectedDisplay = ({ name }: { name: string }) => {
+  const getEmoji = () => {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes("technology")) return "📱";
+    if (lowerName.includes("creative arts")) return "🎨";
+    if (lowerName.includes("business")) return "💼";
+    if (lowerName.includes("personal development")) return "✨";
+    if (lowerName.includes("health")) return "💪";
+    if (lowerName.includes("languages")) return "🗣️";
+    return "📚"; // Default emoji
+  };
+
+  return (
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+      <Box
+        sx={{
+          width: 28,
+          height: 28,
+          borderRadius: "8px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: alpha(COLORS.primary, 0.1),
+        }}
+      >
+        <Box
+          component="span"
+          sx={{
+            fontSize: "18px",
+            color: COLORS.primary,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {getEmoji()}
+        </Box>
+      </Box>
+      <Typography sx={{ fontWeight: 500 }}>{name}</Typography>
+    </Box>
+  );
+};
 
 const CategorySelector = ({
   topCategories,
@@ -60,7 +154,17 @@ const CategorySelector = ({
   selectedSubcategory,
   onCategoryChange,
   onSubcategoryChange,
+  contentType = "course", // Default to "course" if not provided
 }: CategorySelectorProps) => {
+  // Find the selected category name
+  const selectedCategoryName =
+    topCategories.find((cat) => cat.id === selectedCategory)?.name || "";
+  const selectedSubcategoryName =
+    subcategories.find((subcat) => subcat.id === selectedSubcategory)?.name ||
+    "";
+
+  const contentTypeDisplay = contentType === "book" ? "book" : "course";
+
   return (
     <Box
       mb={5}
@@ -85,21 +189,21 @@ const CategorySelector = ({
               width: 32,
               height: 32,
               borderRadius: "50%",
-              backgroundColor: "#6200ee",
-              color: "white",
+              backgroundColor: COLORS.primary,
+              color: COLORS.card.title,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               mr: 1.5,
               fontSize: 15,
               fontWeight: "bold",
-              boxShadow: "0 4px 8px rgba(98, 0, 238, 0.25)",
+              boxShadow: `0 4px 8px rgba(98, 0, 238, 0.25)`,
             }}
           >
             1
           </Box>
           <Typography variant="h6" component="span" fontWeight="medium">
-            What is the category of your course?
+            What is the category of your {contentTypeDisplay}?
           </Typography>
         </Box>
       </Typography>
@@ -118,7 +222,6 @@ const CategorySelector = ({
         <ModernTextField
           name="category"
           select
-          label="Category"
           value={selectedCategory}
           onChange={onCategoryChange}
           fullWidth
@@ -127,38 +230,52 @@ const CategorySelector = ({
           sx={{ width: "100%", maxWidth: "400px" }}
           SelectProps={{
             IconComponent: ExpandMoreIcon,
+            displayEmpty: true,
+            renderValue: () => {
+              if (!selectedCategory)
+                return (
+                  <Typography sx={{ color: "rgba(0, 0, 0, 0.42)" }}>
+                    Select a category
+                  </Typography>
+                );
+              return <CategorySelectedDisplay name={selectedCategoryName} />;
+            },
             MenuProps: {
+              elevation: 2,
               sx: {
+                mt: 1,
                 "& .MuiPaper-root": {
                   borderRadius: "16px",
-                  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.08)",
+                  border: "1px solid rgba(0, 0, 0, 0.04)",
+                  overflow: "hidden",
+                  background: "#fff",
+                  backgroundImage:
+                    "radial-gradient(at 100% 100%, rgba(98, 0, 238, 0.03), transparent 400px)",
+                },
+                "& .MuiList-root": {
+                  padding: "8px",
                 },
                 "& .MuiMenuItem-root": {
-                  paddingTop: "8px",
-                  paddingBottom: "8px",
+                  margin: "2px 0",
                 },
               },
             },
           }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <CategoryIcon sx={{ color: "#6200ee" }} />
-              </InputAdornment>
-            ),
+          InputLabelProps={{
+            shrink: Boolean(selectedCategory),
           }}
         >
           {topCategories.map((category) => (
-            <MenuItem key={category.id} value={category.id}>
-              {category.name}
-            </MenuItem>
+            <StyledMenuItem key={category.id} value={category.id}>
+              <CategorySelectedDisplay name={category.name} />
+            </StyledMenuItem>
           ))}
         </ModernTextField>
 
         <ModernTextField
           name="subcategory"
           select
-          label="Subcategory"
           value={selectedSubcategory}
           onChange={onSubcategoryChange}
           fullWidth
@@ -168,56 +285,96 @@ const CategorySelector = ({
           disabled={subcategories.length === 0}
           SelectProps={{
             IconComponent: ExpandMoreIcon,
+            displayEmpty: true,
+            renderValue: () => {
+              if (!selectedSubcategory)
+                return (
+                  <Typography sx={{ color: "rgba(0, 0, 0, 0.42)" }}>
+                    Select a subcategory
+                  </Typography>
+                );
+              return (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                  <Box
+                    sx={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: "8px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: alpha(COLORS.primary, 0.1),
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        fontSize: "16px",
+                        color: COLORS.primary,
+                      }}
+                    >
+                      📑
+                    </Box>
+                  </Box>
+                  <Typography sx={{ fontWeight: 500 }}>
+                    {selectedSubcategoryName}
+                  </Typography>
+                </Box>
+              );
+            },
             MenuProps: {
+              elevation: 2,
               sx: {
+                mt: 1,
                 "& .MuiPaper-root": {
                   borderRadius: "16px",
-                  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.08)",
+                  border: "1px solid rgba(0, 0, 0, 0.04)",
+                  overflow: "hidden",
+                  background: "#fff",
+                  backgroundImage:
+                    "radial-gradient(at 100% 100%, rgba(98, 0, 238, 0.03), transparent 400px)",
+                },
+                "& .MuiList-root": {
+                  padding: "8px",
                 },
                 "& .MuiMenuItem-root": {
-                  paddingTop: "8px",
-                  paddingBottom: "8px",
+                  margin: "2px 0",
                 },
               },
             },
           }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Box
-                  component="span"
-                  sx={{
-                    width: 24,
-                    height: 24,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: subcategories.length === 0 ? "#aaa" : "#6200ee",
-                  }}
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M2 4H14M6 8H14M9 12H14"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      stroke="currentColor"
-                    />
-                  </svg>
-                </Box>
-              </InputAdornment>
-            ),
+          InputLabelProps={{
+            shrink: Boolean(selectedSubcategory),
           }}
         >
           {subcategories.map((subcategory) => (
-            <MenuItem key={subcategory.id} value={subcategory.id}>
-              {subcategory.name}
-            </MenuItem>
+            <StyledMenuItem key={subcategory.id} value={subcategory.id}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                <Box
+                  sx={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: alpha(COLORS.primary, 0.1),
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      fontSize: "16px",
+                      color: COLORS.primary,
+                    }}
+                  >
+                    📑
+                  </Box>
+                </Box>
+                <Typography>{subcategory.name}</Typography>
+              </Box>
+            </StyledMenuItem>
           ))}
         </ModernTextField>
       </Box>
