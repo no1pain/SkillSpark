@@ -14,7 +14,7 @@ Check out the live demo: [SkillSpark Platform](https://skill-spark-p7n6n3ms3-ole
 - 🔍 Advanced Search & Filtering
 - 📱 Mobile-Friendly Design
 - 🌐 Real-time Updates
-- 💳 Integrated Payment System
+- 💳 Integrated Payment System (not ready yet)
 - 📊 Creator Dashboard
 
 ## 🛠️ Tech Stack
