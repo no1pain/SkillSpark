@@ -50,6 +50,7 @@ const CourseCardPreview = ({
   price,
   type,
   author,
+  imageUrl,
 }: {
   title: string;
   category: string;
@@ -57,6 +58,7 @@ const CourseCardPreview = ({
   price: number;
   type: string;
   author: string;
+  imageUrl?: string | null;
 }) => {
   // Generate a gradient based on the course category
   const getGradientByCategory = (category: string): string => {
@@ -97,20 +99,24 @@ const CourseCardPreview = ({
             left: 0,
             width: "100%",
             height: "100%",
-            background: getGradientByCategory(category),
+            background: imageUrl
+              ? `url(${imageUrl}) center/cover no-repeat`
+              : getGradientByCategory(category),
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <Typography
-            variant="h4"
-            color={COLORS.card.title}
-            fontWeight="bold"
-            align="center"
-          >
-            {type === "course" ? "📹" : "📚"}
-          </Typography>
+          {!imageUrl && (
+            <Typography
+              variant="h4"
+              color={COLORS.card.title}
+              fontWeight="bold"
+              align="center"
+            >
+              {type === "course" ? "📹" : "📚"}
+            </Typography>
+          )}
         </Box>
         <Chip
           label={category || "Category"}
@@ -538,6 +544,7 @@ const AddCoursePage = () => {
                     price={formData.price ? parseFloat(formData.price) : 49.99}
                     type="book"
                     author={formData.author}
+                    imageUrl={formData.imageUrl}
                   />
                 </Box>
                 <Typography

@@ -17,6 +17,7 @@ interface CourseDisplay {
   rating?: number;
   instructor?: string;
   level?: string;
+  imageUrl: string;
 }
 
 const OverviewPage = () => {
@@ -53,6 +54,7 @@ const OverviewPage = () => {
     rating: 5,
     instructor: book.author || "Unknown Author",
     level: book.difficulty || "Beginner",
+    imageUrl: book.imageUrl || "",
   });
 
   return (
