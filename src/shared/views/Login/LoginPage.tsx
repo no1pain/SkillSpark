@@ -48,7 +48,15 @@ const LoginPage = () => {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)",
+      }}
+    >
       <Container maxWidth="xs" sx={{ p: 0 }}>
         <Paper
           elevation={3}
@@ -63,6 +71,7 @@ const LoginPage = () => {
             backdropFilter: "blur(10px)",
             maxWidth: "360px",
             mx: "auto",
+            position: "relative",
           }}
         >
           <Box
@@ -273,7 +282,7 @@ const LoginPage = () => {
           {error}
         </Alert>
       </Snackbar>
-    </>
+    </Box>
   );
 };
 

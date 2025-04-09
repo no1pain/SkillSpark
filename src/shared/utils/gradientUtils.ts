@@ -1,16 +1,16 @@
 import { COLORS } from "@/shared/constants/colors";
 
 export const getGradientByCategory = (category: string): string => {
-  switch (category) {
-    case "Technology":
+  switch (category.toLowerCase()) {
+    case "technology":
       return COLORS.gradients.technology;
-    case "Creative Arts":
+    case "creative arts":
       return COLORS.gradients.creativeArts;
-    case "Business":
+    case "business":
       return COLORS.gradients.business;
-    case "Personal Development":
+    case "personal development":
       return COLORS.gradients.personalDev;
-    case "Finance":
+    case "finance":
       return COLORS.gradients.finance;
     default:
       return COLORS.gradients.default;
