@@ -23,23 +23,30 @@ const createBookFormData = (
   bookFile: File | null,
   imageFile: File | null
 ): FormData => {
-  console.log("Creating form data with:", {
-    bookData,
-    hasBookFile: !!bookFile,
-    hasImageFile: !!imageFile,
-  });
-
   const formData = new FormData();
 
-  formData.append("bookData", JSON.stringify(bookData));
-
+  formData.append(
+    "bookData",
+    JSON.stringify({
+      title: bookData.title,
+      description: bookData.description,
+      category: bookData.category,
+      subcategory: bookData.subcategory,
+      isPublic: bookData.isPublic,
+      contentType: bookData.contentType,
+      price: bookData.price,
+      pages: bookData.pages,
+      author: bookData.author,
+      difficulty: bookData.difficulty,
+      fileFormat: bookData.fileFormat,
+      imageUrl: bookData.imageUrl || "",
+    })
+  );
+  // Add the files
   if (bookFile) {
-    console.log("Adding PDF file:", bookFile.name, bookFile.type);
     formData.append("pdf", bookFile);
   }
-
   if (imageFile) {
-    console.log("Adding image file:", imageFile.name, imageFile.type);
     formData.append("image", imageFile);
   }
 
@@ -54,6 +61,7 @@ export const addBook = async (
   try {
     const formData = createBookFormData(bookData, bookFile, imageFile);
 
+    // Log the form data entries
     console.log("Form data entries:");
     for (let pair of formData.entries()) {
       console.log(pair[0] + ": " + pair[1]);

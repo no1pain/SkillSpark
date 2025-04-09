@@ -590,6 +590,7 @@ const AddCoursePage = () => {
                     onChange={handleChange}
                     onPublicPrivateChange={handlePublicPrivateChange}
                     onFileChange={(file) => handleFileChange(file, "book")}
+                    onImageChange={(file) => handleFileChange(file, "cover")}
                   />
                 </form>
               </Paper>
