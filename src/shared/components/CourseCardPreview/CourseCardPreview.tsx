@@ -174,11 +174,17 @@ export const CourseCardPreview = ({
             <Typography
               variant="body2"
               color="rgba(255, 255, 255, 0.8)"
-              sx={{ mb: 1 }}
+              sx={{
+                mb: 1,
+                display: "-webkit-box",
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                lineHeight: 1.2,
+              }}
             >
-              {description.length > 100
-                ? `${description.substring(0, 100)}...`
-                : description}
+              {description}
             </Typography>
           )}
         </Box>

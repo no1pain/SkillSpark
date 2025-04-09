@@ -134,7 +134,7 @@ export const CourseCard = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       <Box
-        sx={{ position: "relative", paddingTop: "56.25%", overflow: "hidden" }}
+        sx={{ position: "relative", paddingTop: "66.67%", overflow: "hidden" }}
       >
         <Box
           sx={{
@@ -230,6 +230,16 @@ export const CourseCard = ({
             color="white"
             fontWeight="medium"
             gutterBottom
+            sx={{
+              fontSize: "1rem",
+              lineHeight: 1.2,
+              mb: 1,
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              height: "2.4em",
+            }}
           >
             {course.title || "Untitled Course"}
           </Typography>
@@ -287,15 +297,21 @@ export const CourseCard = ({
             </Box>
           )}
 
-          {variant === "featured" && course.description && (
+          {course.description && variant === "featured" && (
             <Typography
               variant="body2"
               color="rgba(255, 255, 255, 0.8)"
-              sx={{ mb: 1 }}
+              sx={{
+                mb: 1,
+                display: "-webkit-box",
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                lineHeight: 1.2,
+              }}
             >
-              {course.description.length > 100
-                ? `${course.description.substring(0, 100)}...`
-                : course.description}
+              {course.description}
             </Typography>
           )}
         </Box>
