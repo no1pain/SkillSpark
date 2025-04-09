@@ -134,7 +134,7 @@ export const CourseCard = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       <Box
-        sx={{ position: "relative", paddingTop: "66.67%", overflow: "hidden" }}
+        sx={{ position: "relative", paddingTop: "46.67%", overflow: "hidden" }}
       >
         <Box
           sx={{
@@ -221,7 +221,7 @@ export const CourseCard = ({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          p: 2,
+          p: 1.5,
         }}
       >
         <Box>
@@ -231,14 +231,14 @@ export const CourseCard = ({
             fontWeight="medium"
             gutterBottom
             sx={{
-              fontSize: "1rem",
+              fontSize: "0.9rem",
               lineHeight: 1.2,
-              mb: 1,
+              mb: 0.75,
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
-              height: "2.4em",
+              height: "2.2em",
             }}
           >
             {course.title || "Untitled Course"}
