@@ -1,6 +1,15 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5174/api";
+const API_URL = import.meta.env.VITE_API_URL || "error";
+
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+axios.defaults.headers.common["Content-Type"] = "application/json";
+
+const getApiUrl = (endpoint: string) => {
+  const baseUrl = API_URL.endsWith("/") ? API_URL.slice(0, -1) : API_URL;
+  const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  return `${baseUrl}${cleanEndpoint}`;
+};
 
 export interface BookData {
   title: string;
@@ -60,14 +69,12 @@ export const addBook = async (
 ) => {
   try {
     const formData = createBookFormData(bookData, bookFile, imageFile);
-
-    // Log the form data entries
     console.log("Form data entries:");
     for (let pair of formData.entries()) {
       console.log(pair[0] + ": " + pair[1]);
     }
 
-    const response = await axios.post(`${API_URL}/books`, formData, {
+    const response = await axios.post(getApiUrl("books"), formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -84,7 +91,7 @@ export const addBook = async (
 
 export const getAllBooks = async () => {
   try {
-    const response = await axios.get(`${API_URL}/books`);
+    const response = await axios.get(getApiUrl("books"));
     return response.data;
   } catch (error) {
     console.error("Error fetching books:", error);
@@ -94,7 +101,7 @@ export const getAllBooks = async () => {
 
 export const getBookById = async (id: string) => {
   try {
-    const response = await axios.get(`${API_URL}/books/${id}`);
+    const response = await axios.get(getApiUrl(`books/${id}`));
     return response.data;
   } catch (error) {
     console.error(`Error fetching book with ID ${id}:`, error);
@@ -109,7 +116,7 @@ export const updateBook = async (
 ) => {
   try {
     const formData = createBookFormData(bookData as BookData, bookFile, null);
-    const response = await axios.put(`${API_URL}/books/${id}`, formData, {
+    const response = await axios.put(getApiUrl(`books/${id}`), formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -123,7 +130,7 @@ export const updateBook = async (
 
 export const deleteBook = async (id: string) => {
   try {
-    const response = await axios.delete(`${API_URL}/books/${id}`);
+    const response = await axios.delete(getApiUrl(`books/${id}`));
     return response.data;
   } catch (error) {
     console.error(`Error deleting book with ID ${id}:`, error);
@@ -133,7 +140,7 @@ export const deleteBook = async (id: string) => {
 
 export const getBooksByCategory = async (category: string) => {
   try {
-    const response = await axios.get(`${API_URL}/books/category/${category}`);
+    const response = await axios.get(getApiUrl(`books/category/${category}`));
     return response.data;
   } catch (error) {
     console.error(`Error fetching books in category ${category}:`, error);

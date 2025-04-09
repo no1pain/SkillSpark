@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
+import { fetchCourses } from "@/app/store/slices/coursesSlice";
 import Header from "@/components/Header/Header";
 import Hero from "@/components/Hero/Hero";
 import { CategoryTabs } from "@/components/CategoryNavigation";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { CourseCard } from "@/shared/components/CourseCard";
-import { getAllBooks, BookData } from "@/shared/api/bookService";
+import { CourseFormData } from "@/shared/types/course";
+import { RootState } from "@/app/store/store";
 
 interface CourseDisplay {
   title: string;
@@ -21,29 +24,20 @@ interface CourseDisplay {
 }
 
 const OverviewPage = () => {
-  const [courses, setCourses] = useState<BookData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const dispatch = useAppDispatch();
+  const {
+    items: courses,
+    status,
+    error,
+  } = useAppSelector((state: RootState) => state.courses);
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await getAllBooks();
-        // Ensure we're working with an array
-        const data = Array.isArray(response) ? response : response.data || [];
-        setCourses(data);
-      } catch (err) {
-        setError("Failed to fetch courses");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (status === "idle") {
+      dispatch(fetchCourses());
+    }
+  }, [dispatch, status]);
 
-    fetchCourses();
-  }, []);
-
-  const mapBookToCourse = (book: BookData): CourseDisplay => ({
+  const mapBookToCourse = (book: CourseFormData): CourseDisplay => ({
     title: book.title || "",
     description: book.description || "",
     category: book.category || "Other",
@@ -56,6 +50,14 @@ const OverviewPage = () => {
     level: book.difficulty || "Beginner",
     imageUrl: book.imageUrl || "",
   });
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -71,22 +73,6 @@ const OverviewPage = () => {
         <Container maxWidth="xl" sx={{ py: 6 }}>
           <Hero />
           <CategoryTabs />
-
-          {loading && (
-            <Typography variant="h6" sx={{ textAlign: "center", mt: 4 }}>
-              Loading courses...
-            </Typography>
-          )}
-
-          {error && (
-            <Typography
-              variant="h6"
-              color="error"
-              sx={{ textAlign: "center", mt: 4 }}
-            >
-              {error}
-            </Typography>
-          )}
 
           <Box
             sx={{
