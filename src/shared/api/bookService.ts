@@ -2,9 +2,6 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL || "error";
 
-axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-axios.defaults.headers.common["Content-Type"] = "application/json";
-
 const getApiUrl = (endpoint: string) => {
   const baseUrl = API_URL.endsWith("/") ? API_URL.slice(0, -1) : API_URL;
   const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
