@@ -42,12 +42,12 @@ const OverviewPage = () => {
     description: book.description || "",
     category: book.category || "Other",
     isFeatured: book.isPublic || false,
-    difficulty: book.difficulty || "Beginner",
+    difficulty: book.level || "Beginner",
     author: book.author || "Unknown Author",
-    price: book.price || 0,
+    price: parseFloat(book.price) || 0,
     rating: 5,
     instructor: book.author || "Unknown Author",
-    level: book.difficulty || "Beginner",
+    level: book.level || "Beginner",
     imageUrl: book.imageUrl || "",
   });
 
