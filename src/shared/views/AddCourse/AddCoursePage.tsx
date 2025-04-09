@@ -64,14 +64,14 @@ const AddCoursePage = () => {
     category: "",
     subcategory: "",
     type: "book",
-    price: "",
+    price: 0,
     duration: "",
     level: "Beginner",
     isPublic: true,
     bookContent: null,
     coverImage: null,
     author: "User",
-    imageUrl: null,
+    imageUrl: "",
   });
 
   useEffect(() => {
