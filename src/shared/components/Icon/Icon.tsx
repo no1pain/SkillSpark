@@ -12,7 +12,7 @@ interface IconProps extends Omit<BoxProps, "color"> {
 const Icon: React.FC<IconProps> = ({
   name,
   size = 24,
-  color = ICON.DEFAULT,
+  color = ICON.default,
   sx = {},
   ...rest
 }) => {
@@ -23,7 +23,7 @@ const Icon: React.FC<IconProps> = ({
       height={size}
       sx={{
         fill: color,
-        color: color, // This helps with SVGs using currentColor
+        color: color,
         ...sx,
       }}
       aria-hidden="true"

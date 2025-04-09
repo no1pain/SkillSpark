@@ -52,8 +52,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     try {
@@ -70,9 +69,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           }
         } catch (err) {
           console.error("Error fetching user data:", err);
-          setError(
-            err instanceof Error ? err.message : "Unknown error occurred"
-          );
         } finally {
           setLoading(false);
         }
@@ -81,7 +77,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return () => unsubscribe();
     } catch (err) {
       console.error("Error setting up auth listener:", err);
-      setError(err instanceof Error ? err.message : "Unknown error occurred");
       setLoading(false);
     }
   }, []);

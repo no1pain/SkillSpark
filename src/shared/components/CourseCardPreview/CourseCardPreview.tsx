@@ -6,7 +6,6 @@ import {
   Chip,
   Rating,
 } from "@mui/material";
-import { COLORS } from "@/shared/constants/colors";
 import { getGradientByCategory } from "@/shared/utils/gradientUtils";
 
 interface CourseCardPreviewProps {
