@@ -3,9 +3,6 @@ import {
   Container,
   Typography,
   styled,
-  Card,
-  CardContent,
-  Chip,
   Snackbar,
   Alert,
   Paper,
@@ -26,6 +23,8 @@ import {
 } from "@/shared/components/CourseForm";
 import { COLORS } from "@/shared/constants/colors";
 import { addBook, BookData } from "@/shared/api/bookService";
+import { CourseFormData } from "@/shared/types/course";
+import { CourseCardPreview } from "@/shared/components/CourseCardPreview/CourseCardPreview";
 
 const PageWrapper = styled("div")({
   width: "100%",
@@ -43,191 +42,6 @@ const FormContainer = styled("div")({
   paddingBottom: "40px",
 });
 
-const CourseCardPreview = ({
-  title,
-  category,
-  level,
-  price,
-  type,
-  author,
-  imageUrl,
-}: {
-  title: string;
-  category: string;
-  level: string;
-  price: number;
-  type: string;
-  author: string;
-  imageUrl?: string | null;
-}) => {
-  // Generate a gradient based on the course category
-  const getGradientByCategory = (category: string): string => {
-    switch (category) {
-      case "Technology":
-        return COLORS.gradients.technology;
-      case "Creative Arts":
-        return COLORS.gradients.creativeArts;
-      case "Business":
-        return COLORS.gradients.business;
-      case "Personal Development":
-        return COLORS.gradients.personalDev;
-      case "Finance":
-        return COLORS.gradients.finance;
-      default:
-        return COLORS.gradients.default;
-    }
-  };
-
-  return (
-    <Card
-      sx={{
-        borderRadius: 2,
-        overflow: "hidden",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        boxShadow: `0 4px 10px ${COLORS.card.shadow}`,
-      }}
-    >
-      <Box
-        sx={{ position: "relative", paddingTop: "66.25%", overflow: "hidden" }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: imageUrl
-              ? `url(${imageUrl}) center/cover no-repeat`
-              : getGradientByCategory(category),
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {!imageUrl && (
-            <Typography
-              variant="h4"
-              color={COLORS.card.title}
-              fontWeight="bold"
-              align="center"
-            >
-              {type === "course" ? "📹" : "📚"}
-            </Typography>
-          )}
-        </Box>
-        <Chip
-          label={category || "Category"}
-          size="small"
-          sx={{
-            position: "absolute",
-            top: 8,
-            right: 8,
-            backgroundColor: COLORS.chip.background,
-            color: COLORS.chip.text,
-            borderRadius: "4px",
-            fontSize: "0.7rem",
-          }}
-        />
-      </Box>
-      <CardContent
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          p: 2,
-          pb: 3,
-        }}
-      >
-        <Box>
-          <Typography
-            variant="subtitle1"
-            fontWeight="medium"
-            gutterBottom
-            sx={{ fontSize: "1rem" }}
-          >
-            {title || `Your ${type === "course" ? "Course" : "Book"} Title`}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              mb: 1.5,
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              fontSize="0.8rem"
-            >
-              {author || "Your Name"}
-            </Typography>
-            <Chip
-              label={level}
-              size="small"
-              sx={{
-                height: 18,
-                fontSize: "0.6rem",
-                backgroundColor:
-                  level === "Beginner"
-                    ? COLORS.level.beginner.bg
-                    : level === "Intermediate"
-                    ? COLORS.level.intermediate.bg
-                    : COLORS.level.advanced.bg,
-                color:
-                  level === "Beginner"
-                    ? COLORS.level.beginner.text
-                    : level === "Intermediate"
-                    ? COLORS.level.intermediate.text
-                    : COLORS.level.advanced.text,
-              }}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mt: 2.5,
-            }}
-          >
-            <Typography
-              variant="body1"
-              fontWeight="bold"
-              color={COLORS.primary}
-            >
-              ${price.toFixed(2)}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              {type === "course" ? "Course" : "Book"}
-            </Typography>
-          </Box>
-        </Box>
-      </CardContent>
-    </Card>
-  );
-};
-
-interface CourseFormData {
-  title: string;
-  description: string;
-  category: string;
-  subcategory: string;
-  type: "book" | "course";
-  price: string;
-  duration: string;
-  level: "Beginner" | "Intermediate" | "Advanced";
-  isPublic: boolean;
-  bookContent: File | null;
-  coverImage: File | null;
-  author: string;
-  imageUrl: string | null;
-}
-
 const steps = [
   "Category & Type",
   "Information & Pricing",
@@ -239,7 +53,6 @@ const AddCoursePage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [topCategories] = useState<TopCategory[]>(getTopCategories());
   const [subcategories, setSubcategories] = useState<SubCategory[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -315,7 +128,6 @@ const AddCoursePage = () => {
       return;
     }
 
-    setIsSubmitting(true);
     try {
       await submitBook();
       setAlertState({
@@ -323,7 +135,6 @@ const AddCoursePage = () => {
         message: "Your book has been successfully published!",
         severity: "success",
       });
-      // Redirect to overview after a short delay
       setTimeout(() => {
         navigate("/overview");
       }, 2000);
@@ -334,8 +145,6 @@ const AddCoursePage = () => {
         message: "Failed to publish your book. Please try again.",
         severity: "error",
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -362,7 +171,6 @@ const AddCoursePage = () => {
   };
 
   const validateForm = () => {
-    // Check required fields based on API requirements
     if (!formData.title || !formData.description || !formData.category) {
       setAlertState({
         open: true,
@@ -372,7 +180,6 @@ const AddCoursePage = () => {
       return false;
     }
 
-    // Price must be a valid number
     if (isNaN(parseFloat(formData.price)) || parseFloat(formData.price) < 0) {
       setAlertState({
         open: true,
@@ -382,7 +189,6 @@ const AddCoursePage = () => {
       return false;
     }
 
-    // Pages must be a valid number
     if (
       isNaN(parseInt(formData.duration, 10)) ||
       parseInt(formData.duration, 10) <= 0
@@ -395,7 +201,6 @@ const AddCoursePage = () => {
       return false;
     }
 
-    // Author is required
     if (!formData.author) {
       setAlertState({
         open: true,
@@ -405,7 +210,6 @@ const AddCoursePage = () => {
       return false;
     }
 
-    // File is required for books
     if (!formData.bookContent) {
       setAlertState({
         open: true,
@@ -545,6 +349,7 @@ const AddCoursePage = () => {
                     type="book"
                     author={formData.author}
                     imageUrl={formData.imageUrl}
+                    description={formData.description}
                   />
                 </Box>
                 <Typography

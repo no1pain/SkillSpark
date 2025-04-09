@@ -1,4 +1,4 @@
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
 interface CourseCardProps {
   title: string;
@@ -7,19 +7,21 @@ interface CourseCardProps {
 
 const CourseCard = ({ title, learners }: CourseCardProps) => {
   return (
-    <Card sx={{ 
-      height: '100%', 
-      display: 'flex', 
-      flexDirection: 'column',
-      bgcolor: 'rgba(35, 35, 35, 0.6)',
-      border: '1px solid rgba(255, 255, 255, 0.05)',
-      borderRadius: 2,
-      overflow: 'hidden',
-      transition: 'transform 0.3s ease',
-      '&:hover': {
-        transform: 'translateY(-5px)',
-      }
-    }}>
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "rgba(35, 35, 35, 0.6)",
+        border: "1px solid rgba(255, 255, 255, 0.05)",
+        borderRadius: 2,
+        overflow: "hidden",
+        transition: "transform 0.3s ease",
+        "&:hover": {
+          transform: "translateY(-5px)",
+        },
+      }}
+    >
       <CardMedia
         component="img"
         height="200"
@@ -30,7 +32,11 @@ const CourseCard = ({ title, learners }: CourseCardProps) => {
         <Typography variant="h6" color="white" fontWeight="medium">
           {title}
         </Typography>
-        <Typography variant="body2" color="rgba(255, 255, 255, 0.6)" sx={{ mt: 1 }}>
+        <Typography
+          variant="body2"
+          color="rgba(255, 255, 255, 0.6)"
+          sx={{ mt: 1 }}
+        >
           {learners.toLocaleString()} learners
         </Typography>
       </CardContent>
@@ -38,4 +44,4 @@ const CourseCard = ({ title, learners }: CourseCardProps) => {
   );
 };
 
-export default CourseCard; 
+export default CourseCard;
