@@ -9,7 +9,7 @@ import {
 import { SubCategory, TopCategory } from "@/shared/utils/categoryUtils";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { COLORS } from "@/shared/constants/colors";
-import { CourseType } from "./CourseTypeSelector";
+import { CourseType } from "@/shared/types/course";
 
 interface CategorySelectorProps {
   topCategories: TopCategory[];

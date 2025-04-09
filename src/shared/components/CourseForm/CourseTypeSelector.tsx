@@ -7,8 +7,7 @@ import {
   Fade,
 } from "@mui/material";
 import { COLORS } from "@/shared/constants/colors";
-
-export type CourseType = "course" | "book";
+import { CourseType } from "@/shared/types/course";
 
 interface CourseTypeSelectorProps {
   selectedType: CourseType;

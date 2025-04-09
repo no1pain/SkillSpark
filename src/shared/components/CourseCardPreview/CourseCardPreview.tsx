@@ -16,7 +16,7 @@ interface CourseCardPreviewProps {
   type: string;
   author: string;
   description?: string;
-  imageUrl?: string | null;
+  imageUrl?: string;
 }
 
 export const CourseCardPreview = ({
@@ -29,6 +29,8 @@ export const CourseCardPreview = ({
   description,
   imageUrl,
 }: CourseCardPreviewProps) => {
+  const displayImage = imageUrl || "";
+
   return (
     <Card
       sx={{
@@ -52,15 +54,15 @@ export const CourseCardPreview = ({
             left: 0,
             width: "100%",
             height: "100%",
-            background: imageUrl
-              ? `url(${imageUrl}) center/cover no-repeat`
+            background: displayImage
+              ? `url(${displayImage}) center/cover no-repeat`
               : getGradientByCategory(category),
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          {!imageUrl && (
+          {!displayImage && (
             <Typography
               variant="h4"
               color="white"

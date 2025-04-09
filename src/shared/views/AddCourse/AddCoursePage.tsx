@@ -18,12 +18,11 @@ import {
 } from "@/shared/utils/categoryUtils";
 import {
   CourseFormStepper,
-  CourseType,
   CourseFormStepContent,
 } from "@/shared/components/CourseForm";
 import { COLORS } from "@/shared/constants/colors";
 import { addBook, BookData } from "@/shared/api/bookService";
-import { CourseFormData } from "@/shared/types/course";
+import { CourseFormData, CourseType } from "@/shared/types/course";
 import { CourseCardPreview } from "@/shared/components/CourseCardPreview/CourseCardPreview";
 
 const PageWrapper = styled("div")({
@@ -64,8 +63,8 @@ const AddCoursePage = () => {
     category: "",
     subcategory: "",
     type: "book",
-    price: 0,
-    duration: "",
+    price: "0",
+    duration: "0",
     level: "Beginner",
     isPublic: true,
     bookContent: null,
@@ -149,25 +148,51 @@ const AddCoursePage = () => {
   };
 
   const submitBook = async () => {
-    const categoryName =
-      topCategories.find((cat) => cat.id === formData.category)?.name || "";
+    try {
+      if (!formData.bookContent) {
+        throw new Error("Book content (PDF) is required");
+      }
 
-    const bookData: BookData = {
-      title: formData.title,
-      description: formData.description,
-      category: categoryName,
-      subcategory: formData.subcategory || undefined,
-      isPublic: formData.isPublic,
-      contentType: "Book",
-      price: parseFloat(formData.price) || 0,
-      pages: parseInt(formData.duration, 10) || 0,
-      author: formData.author,
-      difficulty: formData.level,
-      fileFormat: "PDF",
-      imageUrl: "",
-    };
+      const bookData: BookData = {
+        title: formData.title,
+        description: formData.description,
+        category: formData.category,
+        subcategory: formData.subcategory,
+        contentType: formData.type === "book" ? "Book" : "Course",
+        price: parseFloat(formData.price) || 0,
+        pages: parseInt(formData.duration) || 0,
+        author: formData.author,
+        difficulty: formData.level as "Beginner" | "Intermediate" | "Advanced",
+        isPublic: formData.isPublic,
+        imageUrl: formData.imageUrl || "",
+        fileFormat: "PDF",
+      };
 
-    await addBook(bookData, formData.bookContent, formData.coverImage);
+      const response = await addBook(
+        bookData,
+        formData.bookContent,
+        formData.coverImage
+      );
+
+      if (response && response.success) {
+        setAlertState({
+          open: true,
+          message: "Book added successfully!",
+          severity: "success",
+        });
+        setTimeout(() => {
+          navigate("/overview");
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Error submitting book:", error);
+      setAlertState({
+        open: true,
+        message: error instanceof Error ? error.message : "Failed to add book",
+        severity: "error",
+      });
+      throw error;
+    }
   };
 
   const validateForm = () => {
@@ -180,7 +205,8 @@ const AddCoursePage = () => {
       return false;
     }
 
-    if (isNaN(parseFloat(formData.price)) || parseFloat(formData.price) < 0) {
+    const priceValue = parseFloat(formData.price);
+    if (isNaN(priceValue) || priceValue < 0) {
       setAlertState({
         open: true,
         message: "Please enter a valid price",
@@ -189,10 +215,8 @@ const AddCoursePage = () => {
       return false;
     }
 
-    if (
-      isNaN(parseInt(formData.duration, 10)) ||
-      parseInt(formData.duration, 10) <= 0
-    ) {
+    const pageCount = parseInt(formData.duration);
+    if (isNaN(pageCount) || pageCount <= 0) {
       setAlertState({
         open: true,
         message: "Please enter a valid page count",

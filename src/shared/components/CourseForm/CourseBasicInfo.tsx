@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
-import { CourseType } from "./CourseTypeSelector";
+import { CourseType } from "@/shared/types/course";
 import { COLORS } from "@/shared/constants/colors";
 import NumberedBadge from "./NumberedBadge";
 import ModernTextField from "./ModernTextField";
@@ -10,7 +10,7 @@ interface CourseBasicInfoProps {
   title: string;
   description: string;
   type: CourseType;
-  imageUrl: string | null;
+  imageUrl?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onImageChange: (file: File | null) => void;
 }
@@ -23,10 +23,10 @@ const CourseBasicInfo = ({
   onChange,
   onImageChange,
 }: CourseBasicInfoProps) => {
-  const [previewUrl, setPreviewUrl] = useState<string | null>(imageUrl);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(imageUrl || null);
 
   useEffect(() => {
-    setPreviewUrl(imageUrl);
+    setPreviewUrl(imageUrl || null);
   }, [imageUrl]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

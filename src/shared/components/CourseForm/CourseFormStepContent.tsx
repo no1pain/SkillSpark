@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { CourseType } from "./CourseTypeSelector";
+import { CourseType } from "@/shared/types/course";
 import CategorySelector from "./CategorySelector";
 import VisibilitySelector from "./VisibilitySelector";
 import CourseTypeSelector from "./CourseTypeSelector";
@@ -21,7 +21,7 @@ interface CourseFormData {
   isPublic: boolean;
   bookContent?: File | null;
   author: string;
-  imageUrl: string | null;
+  imageUrl?: string;
 }
 
 interface CourseFormStepContentProps {

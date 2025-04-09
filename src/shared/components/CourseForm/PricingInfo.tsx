@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
-import { CourseType } from "./CourseTypeSelector";
+import { CourseType } from "@/shared/types/course";
 import { COLORS } from "@/shared/constants/colors";
 import NumberedBadge from "./NumberedBadge";
 import ModernTextField from "./ModernTextField";
